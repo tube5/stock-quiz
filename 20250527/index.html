@@ -1,1 +1,598 @@
+<!DOCTYPE html>
+<html>
 
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JSFiddle n2wvL8gp</title>
+
+  <style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #e066a3 0%, #c94b9e 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.app {
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 9/16;
+    background: linear-gradient(135deg, #f8e8f3 0%, #e8d5e8 100%);
+    border-radius: 25px;
+    padding: 25px 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.quiz-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.score-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #8B5A96;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.header h1 {
+    color: #8B5A96;
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 25px;
+}
+
+.progress-container {
+    margin-bottom: 25px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(139, 90, 150, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.progress {
+    height: 100%;
+    background: linear-gradient(90deg, #8B5A96, #a66bb3);
+    border-radius: 10px;
+    transition: width 0.3s ease;
+    width: 0%;
+}
+
+.question-info {
+    text-align: center;
+    color: #8B5A96;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.question-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.question-container h2 {
+    color: #333;
+    font-size: 18px;
+    line-height: 1.4;
+    padding: 25px 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    font-weight: 600;
+    width: 100%;
+}
+
+.answers-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.answer-btn {
+    background: white;
+    color: #333;
+    border: 2px solid #e0e0e0;
+    border-radius: 15px;
+    padding: 18px 15px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.answer-btn:hover {
+    background: #f5f5f5;
+    border-color: #8B5A96;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(139, 90, 150, 0.2);
+}
+
+.answer-btn:active {
+    transform: translateY(0);
+}
+
+.answer-btn.correct {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    border-color: #28a745;
+    animation: correctPulse 0.6s ease;
+}
+
+.answer-btn.wrong {
+    background: linear-gradient(135deg, #dc3545, #fd7e14);
+    color: white;
+    border-color: #dc3545;
+    animation: wrongShake 0.6s ease;
+}
+
+.answer-btn.disabled {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+@keyframes correctPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes wrongShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.result-screen {
+    text-align: center;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.result-screen h2 {
+    color: #333;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.final-score {
+    font-size: 48px;
+    font-weight: bold;
+    color: #8B5A96;
+    margin-bottom: 20px;
+}
+
+.restart-btn {
+    background: linear-gradient(135deg, #8B5A96, #a66bb3);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+.restart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(139, 90, 150, 0.3);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 40px 30px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 350px;
+    text-align: center;
+    animation: slideIn 0.3s ease;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.modal-content p {
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 25px;
+    font-size: 16px;
+}
+
+.modal-btn {
+    background: linear-gradient(135deg, #8B5A96, #a66bb3);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 15px 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.modal-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(139, 90, 150, 0.3);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { 
+        transform: translate(-50%, -60%); 
+        opacity: 0; 
+    }
+    to { 
+        transform: translate(-50%, -50%); 
+        opacity: 1; 
+    }
+}
+
+@media (max-width: 480px) {
+    .app {
+        max-width: 100%;
+        margin: 0;
+        border-radius: 0;
+        aspect-ratio: auto;
+        min-height: 100vh;
+    }
+    
+    .header h1 {
+        font-size: 20px;
+    }
+    
+    .question-container h2 {
+        font-size: 16px;
+        padding: 20px 15px;
+    }
+    
+    .answer-btn {
+        font-size: 14px;
+        padding: 16px 12px;
+        height: 55px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        padding: 30px 20px;
+    }
+}
+
+  </style>
+
+  
+</head>
+<body>
+  <div class="app">
+    <div class="quiz-container">
+        <div class="header">
+            <div class="score-badge">점수: <span id="score">0</span></div>
+            <h1 id="themeTitle">제약/바이오 관련주</h1>
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+            <div class="question-info">
+                <span id="currentQuestion">1</span> / <span id="totalQuestions">10</span>
+            </div>
+        </div>
+        <div class="question-container">
+            <h2 id="question">제약/바이오 관련주에 해당하지 않는 종목은?</h2>
+        </div>
+        <div class="answers-container">
+            <button class="answer-btn" onclick="selectAnswer(0)">티움바이오</button>
+            <button class="answer-btn" onclick="selectAnswer(1)">알테오젠</button>
+            <button class="answer-btn" onclick="selectAnswer(2)">삼성중공업</button>
+            <button class="answer-btn" onclick="selectAnswer(3)">셀트리온</button>
+        </div>
+    </div>
+    <div class="result-screen" id="resultScreen" style="display: none;">
+        <h2>퀴즈 완료!</h2>
+        <div class="final-score">
+            <span id="finalScore"></span> / <span id="totalQuestionsDisplay">10</span>
+        </div>
+        <p id="resultMessage"></p>
+        <button class="restart-btn" onclick="restartQuiz()">다시 시작</button>
+    </div>
+</div>
+<div id="resultModal" class="modal">
+    <div class="modal-content">
+        <h3 id="modalTitle">정답입니다!</h3>
+        <p id="modalMessage">삼성중공업은(는) 조선/조선기자재 관련주입니다.</p>
+        <button class="modal-btn" onclick="closeModalAndNext()">다음 문제</button>
+    </div>
+</div>
+<audio id="correctSound" preload="auto">
+    <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.wav" type="audio/wav">
+</audio>
+<audio id="wrongSound" preload="auto">
+    <source src="https://www.soundjay.com/misc/sounds/fail-buzzer-02.wav" type="audio/wav">
+</audio>
+<audio id="completeSound" preload="auto">
+    <source src="https://www.soundjay.com/misc/sounds/celebration.wav" type="audio/wav">
+</audio>
+
+
+  <script>
+    const stockThemes = {
+    '제약/바이오': ['티움바이오', '와이바이오로직스', '에이비엘바이오', '이뮨온시아', '헬릭스미스', '이수앱지스', '알테오젠', '셀트리온', '코오롱생명과학', 'HLB파나진', '쓰리빌리언', '제넥신', '듀켐바이오', '메디포스트'],
+    '조선/조선기자재': ['삼성중공업', '화인베스틸', '태웅', '오리엔탈정공', '메디콕스', '케이에스피', '하이록코리아', '성광벤드'],
+    '전력설비': ['티씨머티리얼즈', '세명전기', '제룡산업', '바이오스마트', '광명전기', '피앤씨테크', '산일전기'],
+    '방위산업': ['한화', '한화에어로스페이스', '휴니드', '웨이브일렉트로', 'LIG넥스원', 'RF시스템즈', '퍼스텍'],
+    '지주사': ['한화', 'GS피앤엘', '하림지주', '콜마홀딩스', 'SNT홀딩스', '두산', '코오롱'],
+    '코로나19': ['셀리드', '국전약품', '에스디바이오센서', '샤페론', '바이오노트', '오상헬스케어', '수젠텍', '그린생명과학']
+};
+
+let currentQuestionIndex = 0;
+let score = 0;
+let totalQuestions = 10;
+let questions = [];
+let currentQuestion = null;
+
+const correctSound = document.getElementById('correctSound');
+const wrongSound = document.getElementById('wrongSound');
+const completeSound = document.getElementById('completeSound');
+
+function playSound(soundElement) {
+    if (soundElement) {
+        soundElement.currentTime = 0;
+        soundElement.play().catch(e => console.log('Sound play failed:', e));
+    }
+}
+
+function shuffleArray(array) {
+    const newArray = [...array];
+    for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
+}
+
+function getRandomElement(array) {
+    return array[Math.floor(Math.random() * array.length)];
+}
+
+function generateQuestion() {
+    const selectedTheme = '제약/바이오';
+    
+    const themeStocks = [...stockThemes[selectedTheme]];
+    const correctStocks = [];
+    
+    for (let i = 0; i < 3; i++) {
+        if (themeStocks.length > 0) {
+            const randomIndex = Math.floor(Math.random() * themeStocks.length);
+            correctStocks.push(themeStocks.splice(randomIndex, 1)[0]);
+        }
+    }
+    
+    const otherThemes = Object.keys(stockThemes).filter(theme => theme !== selectedTheme);
+    const wrongTheme = getRandomElement(otherThemes);
+    const wrongStock = getRandomElement(stockThemes[wrongTheme]);
+    
+    const allAnswers = [...correctStocks, wrongStock];
+    const shuffledAnswers = shuffleArray(allAnswers);
+    
+    const questionText = `${selectedTheme} 관련주에 해당하지 않는 종목은?`;
+    
+    return {
+        theme: selectedTheme,
+        question: questionText,
+        answers: shuffledAnswers,
+        correctAnswer: wrongStock,
+        correctTheme: wrongTheme,
+        themes: { ...stockThemes }
+    };
+}
+
+function generateQuestions() {
+    questions = [];
+    for (let i = 0; i < totalQuestions; i++) {
+        questions.push(generateQuestion());
+    }
+}
+
+function displayQuestion() {
+    currentQuestion = questions[currentQuestionIndex];
+    
+    document.getElementById('themeTitle').textContent = currentQuestion.theme + ' 관련주';
+    document.getElementById('question').textContent = currentQuestion.question;
+    document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+    document.getElementById('totalQuestions').textContent = totalQuestions;
+    
+    const answerButtons = document.querySelectorAll('.answer-btn');
+    answerButtons.forEach((btn, index) => {
+        btn.textContent = currentQuestion.answers[index];
+        btn.className = 'answer-btn';
+    });
+    
+    const progress = ((currentQuestionIndex) / totalQuestions) * 100;
+    document.getElementById('progress').style.width = progress + '%';
+}
+
+function selectAnswer(answerIndex) {
+    const selectedStock = currentQuestion.answers[answerIndex];
+    const answerButtons = document.querySelectorAll('.answer-btn');
+    
+    answerButtons.forEach(btn => btn.classList.add('disabled'));
+    
+    let isCorrect = selectedStock === currentQuestion.correctAnswer;
+    let modalTitle, modalMessage;
+    
+    if (isCorrect) {
+        answerButtons[answerIndex].classList.add('correct');
+        score++;
+        document.getElementById('score').textContent = score;
+        
+        modalTitle = '정답입니다!';
+        modalMessage = `${selectedStock}은(는) ${currentQuestion.correctTheme} 관련주입니다.`;
+        playSound(correctSound);
+    } else {
+        answerButtons[answerIndex].classList.add('wrong');
+        
+        const correctIndex = currentQuestion.answers.findIndex(answer => answer === currentQuestion.correctAnswer);
+        if (correctIndex !== -1) {
+            answerButtons[correctIndex].classList.add('correct');
+        }
+        
+        modalTitle = '오답입니다.';
+        modalMessage = `${selectedStock}은(는) ${currentQuestion.theme} 관련주입니다.`;
+        playSound(wrongSound);
+    }
+    
+    setTimeout(() => {
+        const modalTitleElement = document.getElementById('modalTitle');
+        if (isCorrect) {
+            modalTitleElement.style.color = '#28a745';
+        } else {
+            modalTitleElement.style.color = '#dc3545';
+        }
+    }, 100);
+    
+    showModal(modalTitle, modalMessage);
+}
+
+function showModal(title, message) {
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalMessage').textContent = message;
+    document.getElementById('resultModal').style.display = 'block';
+}
+
+function closeModalAndNext() {
+    document.getElementById('resultModal').style.display = 'none';
+    
+    setTimeout(() => {
+        currentQuestionIndex++;
+        
+        if (currentQuestionIndex < totalQuestions) {
+            displayQuestion();
+        } else {
+            showResult();
+        }
+    }, 300);
+}
+
+function showResult() {
+    document.querySelector('.quiz-container').style.display = 'none';
+    document.getElementById('resultScreen').style.display = 'flex';
+    
+    const percentage = (score / totalQuestions) * 100;
+    document.getElementById('finalScore').textContent = score;
+    document.getElementById('totalQuestionsDisplay').textContent = totalQuestions;
+    
+    let resultMessage;
+    if (percentage >= 80) {
+        resultMessage = '훌륭합니다! 바이오 전문가군요! 🎉';
+    } else if (percentage >= 60) {
+        resultMessage = '좋습니다! 더 공부하면 전문가가 될 수 있어요! 📈';
+    } else if (percentage >= 40) {
+        resultMessage = '괜찮습니다! 조금 더 공부해보세요! 📚';
+    } else {
+        resultMessage = '아직 공부가 더 필요해요! 화이팅! 💪';
+    }
+    
+    document.getElementById('resultMessage').textContent = resultMessage;
+    playSound(completeSound);
+}
+
+function restartQuiz() {
+    currentQuestionIndex = 0;
+    score = 0;
+    
+    document.getElementById('score').textContent = score;
+    document.querySelector('.quiz-container').style.display = 'flex';
+    document.getElementById('resultScreen').style.display = 'none';
+    
+    generateQuestions();
+    displayQuestion();
+}
+
+function initQuiz() {
+    generateQuestions();
+    displayQuestion();
+}
+
+document.addEventListener('DOMContentLoaded', initQuiz);
+
+window.onclick = function(event) {
+    const modal = document.getElementById('resultModal');
+    if (event.target === modal) {
+        closeModalAndNext();
+    }
+}
+
+  </script>
+</body>
+</html>
