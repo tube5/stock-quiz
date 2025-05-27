@@ -5,15 +5,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>JSFiddle 4cLd15jv</title>
+  <title>JSFiddle zbrut7ae</title>
 
   <style>
-    * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background: linear-gradient(135deg, #e066a3 0%, #c94b9e 100%);
@@ -23,7 +18,6 @@ body {
     align-items: center;
     padding: 10px;
 }
-
 .app {
     width: 100%;
     max-width: 400px;
@@ -37,51 +31,21 @@ body {
     position: relative;
     overflow: hidden;
 }
-
-.quiz-container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-.header {
-    text-align: center;
-    margin-bottom: 20px;
-    position: relative;
-}
-
+.quiz-container { display: flex; flex-direction: column; height: 100%; }
+.header { text-align: center; margin-bottom: 20px; position: relative; }
 .score-badge {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background: #8B5A96;
-    color: white;
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-size: 14px;
-    font-weight: 600;
+    position: absolute; top: 0; right: 0;
+    background: #8B5A96; color: white;
+    padding: 8px 15px; border-radius: 20px;
+    font-size: 14px; font-weight: 600;
 }
-
-.header h1 {
-    color: #8B5A96;
-    font-size: 22px;
-    font-weight: bold;
-    margin-top: 25px;
-}
-
-.progress-container {
-    margin-bottom: 25px;
-}
-
+.header h1 { color: #8B5A96; font-size: 22px; font-weight: bold; margin-top: 25px; }
+.progress-container { margin-bottom: 25px; }
 .progress-bar {
-    width: 100%;
-    height: 6px;
+    width: 100%; height: 6px;
     background: rgba(139, 90, 150, 0.2);
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 10px;
+    border-radius: 10px; overflow: hidden; margin-bottom: 10px;
 }
-
 .progress {
     height: 100%;
     background: linear-gradient(90deg, #8B5A96, #a66bb3);
@@ -89,244 +53,107 @@ body {
     transition: width 0.3s ease;
     width: 0%;
 }
-
-.question-info {
-    text-align: center;
-    color: #8B5A96;
-    font-size: 14px;
-    font-weight: 600;
-}
-
+.question-info { text-align: center; color: #8B5A96; font-size: 14px; font-weight: 600; }
 .question-container {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin-bottom: 30px;
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    text-align: center; margin-bottom: 30px;
 }
-
 .question-container h2 {
-    color: #333;
-    font-size: 18px;
-    line-height: 1.4;
-    padding: 25px 20px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    font-weight: 600;
-    width: 100%;
+    color: #333; font-size: 18px; line-height: 1.4;
+    padding: 25px 20px; background: rgba(255,255,255,0.9);
+    border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    font-weight: 600; width: 100%;
 }
-
 .answers-container {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 30px;
+    display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px;
 }
-
 .answer-btn {
-    background: white;
-    color: #333;
-    border: 2px solid #e0e0e0;
-    border-radius: 15px;
-    padding: 18px 15px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: center;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+    background: white; color: #333;
+    border: 2px solid #e0e0e0; border-radius: 15px;
+    padding: 18px 15px; font-size: 16px; font-weight: 600;
+    cursor: pointer; transition: all 0.3s ease;
+    text-align: center; box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    height: 60px; display: flex; align-items: center; justify-content: center; width: 100%;
 }
-
 .answer-btn:hover {
-    background: #f5f5f5;
-    border-color: #8B5A96;
+    background: #f5f5f5; border-color: #8B5A96;
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(139, 90, 150, 0.2);
+    box-shadow: 0 5px 15px rgba(139,90,150,0.2);
 }
-
-.answer-btn:active {
-    transform: translateY(0);
-}
-
+.answer-btn:active { transform: translateY(0); }
 .answer-btn.correct {
     background: linear-gradient(135deg, #28a745, #20c997);
-    color: white;
-    border-color: #28a745;
+    color: white; border-color: #28a745;
     animation: correctPulse 0.6s ease;
 }
-
 .answer-btn.wrong {
     background: linear-gradient(135deg, #dc3545, #fd7e14);
-    color: white;
-    border-color: #dc3545;
+    color: white; border-color: #dc3545;
     animation: wrongShake 0.6s ease;
 }
-
-.answer-btn.disabled {
-    pointer-events: none;
-    opacity: 0.6;
-}
-
-@keyframes correctPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-}
-
-@keyframes wrongShake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
-}
-
+.answer-btn.disabled { pointer-events: none; opacity: 0.6; }
+@keyframes correctPulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.05);} }
+@keyframes wrongShake { 0%,100%{transform:translateX(0);} 25%{transform:translateX(-5px);} 75%{transform:translateX(5px);} }
 .result-screen {
-    text-align: center;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    text-align: center; height: 100%;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
 }
-
-.result-screen h2 {
-    color: #333;
-    font-size: 28px;
-    margin-bottom: 20px;
-}
-
-.final-score {
-    font-size: 48px;
-    font-weight: bold;
-    color: #8B5A96;
-    margin-bottom: 20px;
-}
-
+.result-screen h2 { color: #333; font-size: 28px; margin-bottom: 20px; }
+.final-score { font-size: 48px; font-weight: bold; color: #8B5A96; margin-bottom: 20px; }
 .restart-btn {
     background: linear-gradient(135deg, #8B5A96, #a66bb3);
-    color: white;
-    border: none;
-    border-radius: 25px;
-    padding: 15px 30px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 20px;
+    color: white; border: none; border-radius: 25px;
+    padding: 15px 30px; font-size: 16px; font-weight: 600;
+    cursor: pointer; transition: all 0.3s ease; margin-top: 20px;
 }
-
 .restart-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(139, 90, 150, 0.3);
+    box-shadow: 0 5px 15px rgba(139,90,150,0.3);
 }
-
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    animation: fadeIn 0.3s ease;
+    display: none; position: fixed; z-index: 1000;
+    left: 0; top: 0; width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.6); animation: fadeIn 0.3s ease;
 }
-
 .modal-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
+    position: absolute; top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 40px 30px;
-    border-radius: 20px;
-    width: 90%;
-    max-width: 350px;
-    text-align: center;
-    animation: slideIn 0.3s ease;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    background-color: white; padding: 40px 30px; border-radius: 20px;
+    width: 90%; max-width: 350px; text-align: center;
+    animation: slideIn 0.3s ease; box-shadow: 0 20px 40px rgba(0,0,0,0.3);
 }
-
-.modal-content h3 {
-    font-size: 22px;
-    margin-bottom: 15px;
-    font-weight: bold;
-}
-
-.modal-content p {
-    color: #666;
-    line-height: 1.5;
-    margin-bottom: 25px;
-    font-size: 16px;
-}
-
+.modal-content h3 { font-size: 22px; margin-bottom: 15px; font-weight: bold; }
+.modal-content p { color: #666; line-height: 1.5; margin-bottom: 25px; font-size: 16px; }
 .modal-btn {
     background: linear-gradient(135deg, #8B5A96, #a66bb3);
-    color: white;
-    border: none;
-    border-radius: 25px;
-    padding: 15px 25px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    width: 100%;
+    color: white; border: none; border-radius: 25px;
+    padding: 15px 25px; font-size: 16px; font-weight: 600;
+    cursor: pointer; transition: all 0.3s ease; width: 100%;
 }
-
 .modal-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(139, 90, 150, 0.3);
+    box-shadow: 0 5px 15px rgba(139,90,150,0.3);
 }
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+.celebration {
+    position: fixed;
+    pointer-events: none;
+    font-size: 50px;
+    opacity: 0;
+    z-index: 2000;
 }
-
-@keyframes slideIn {
-    from { 
-        transform: translate(-50%, -60%); 
-        opacity: 0; 
-    }
-    to { 
-        transform: translate(-50%, -50%); 
-        opacity: 1; 
-    }
+@keyframes celebrate {
+    0% { transform: translateY(0) scale(0); opacity: 1; }
+    50% { transform: translateY(-100px) scale(1.5); opacity: 1; }
+    100% { transform: translateY(-200px) scale(2); opacity: 0; }
 }
-
+@keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+@keyframes slideIn { from{transform:translate(-50%,-60%);opacity:0;} to{transform:translate(-50%,-50%);opacity:1;} }
 @media (max-width: 480px) {
-    .app {
-        max-width: 100%;
-        margin: 0;
-        border-radius: 0;
-        aspect-ratio: auto;
-        min-height: 100vh;
-    }
-    
-    .header h1 {
-        font-size: 20px;
-    }
-    
-    .question-container h2 {
-        font-size: 16px;
-        padding: 20px 15px;
-    }
-    
-    .answer-btn {
-        font-size: 14px;
-        padding: 16px 12px;
-        height: 55px;
-    }
-    
-    .modal-content {
-        width: 95%;
-        padding: 30px 20px;
-    }
+    .app { max-width: 100%; margin: 0; border-radius: 0; aspect-ratio: auto; min-height: 100vh; }
+    .header h1 { font-size: 20px; }
+    .question-container h2 { font-size: 16px; padding: 20px 15px; }
+    .answer-btn { font-size: 14px; padding: 16px 12px; height: 55px; }
+    .modal-content { width: 95%; padding: 30px 20px; }
 }
 
   </style>
@@ -374,6 +201,7 @@ body {
         <button class="modal-btn" onclick="closeModalAndNext()">다음 문제</button>
     </div>
 </div>
+<div id="celebration" class="celebration">🎉</div>
 <audio id="correctSound" preload="auto">
     <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.wav" type="audio/wav">
 </audio>
@@ -391,7 +219,7 @@ body {
     '조선/조선기자재': ['삼성중공업', '화인베스틸', '태웅', '오리엔탈정공', '메디콕스', '케이에스피', '하이록코리아', '성광벤드'],
     '전력설비': ['티씨머티리얼즈', '세명전기', '제룡산업', '바이오스마트', '광명전기', '피앤씨테크', '산일전기'],
     '방위산업': ['한화', '한화에어로스페이스', '휴니드', '웨이브일렉트로', 'LIG넥스원', 'RF시스템즈', '퍼스텍'],
-    '지주사': ['한화', 'GS피앤엘', '하림지주', '콜마홀딩스', 'SNT홀딩스', '두산', '코오롱'],
+    '지주사': ['GS피앤엘', '하림지주', '콜마홀딩스', 'SNT홀딩스', '두산', '코오롱'],
     '코로나19': ['셀리드', '국전약품', '에스디바이오센서', '샤페론', '바이오노트', '오상헬스케어', '수젠텍', '그린생명과학']
 };
 
@@ -399,21 +227,38 @@ const themeOrder = ['제약/바이오', '조선/조선기자재', '전력설비'
 
 let currentQuestionIndex = 0;
 let score = 0;
-let totalQuestions = 6;
+let totalQuestions = themeOrder.length;
 let questions = [];
 let currentQuestion = null;
 
+// 효과음
 const correctSound = document.getElementById('correctSound');
 const wrongSound = document.getElementById('wrongSound');
 const completeSound = document.getElementById('completeSound');
 
+// 사운드 재생 함수
 function playSound(soundElement) {
     if (soundElement) {
         soundElement.currentTime = 0;
-        soundElement.play().catch(e => console.log('Sound play failed:', e));
+        soundElement.play().catch(() => {});
     }
 }
 
+// 폭죽 효과 (정답일 때만)
+function showCelebration() {
+    const celebration = document.getElementById('celebration');
+    celebration.style.left = Math.random() * 80 + '%';
+    celebration.style.top = Math.random() * 50 + 30 + '%';
+    celebration.style.animation = 'none';
+    celebration.offsetHeight;
+    celebration.style.animation = 'celebrate 1.5s ease-out';
+    celebration.style.opacity = '1';
+    setTimeout(() => {
+        celebration.style.opacity = '0';
+    }, 1500);
+}
+
+// 배열 셔플
 function shuffleArray(array) {
     const newArray = [...array];
     for (let i = newArray.length - 1; i > 0; i--) {
@@ -423,44 +268,64 @@ function shuffleArray(array) {
     return newArray;
 }
 
+// 랜덤 요소 선택
 function getRandomElement(array) {
     return array[Math.floor(Math.random() * array.length)];
 }
 
-function generateQuestion(questionIndex) {
-    const selectedTheme = themeOrder[questionIndex];
-    
-    const themeStocks = [...stockThemes[selectedTheme]];
-    const correctStocks = [];
-    
-    // 해당 테마에서 3개 종목 선택
-    for (let i = 0; i < 3; i++) {
-        if (themeStocks.length > 0) {
-            const randomIndex = Math.floor(Math.random() * themeStocks.length);
-            correctStocks.push(themeStocks.splice(randomIndex, 1)[0]);
-        }
+// 중복 없는 종목 선택
+function getUniqueStocks(availableStocks, excludeStocks, count) {
+    const uniqueStocks = [];
+    const remainingStocks = availableStocks.filter(stock => !excludeStocks.includes(stock));
+    for (let i = 0; i < count && remainingStocks.length > 0; i++) {
+        const randomIndex = Math.floor(Math.random() * remainingStocks.length);
+        const selectedStock = remainingStocks.splice(randomIndex, 1)[0];
+        uniqueStocks.push(selectedStock);
     }
-    
-    // 다른 테마에서 1개 종목 선택 (정답)
-    const otherThemes = themeOrder.filter(theme => theme !== selectedTheme);
-    const wrongTheme = getRandomElement(otherThemes);
-    const wrongStock = getRandomElement(stockThemes[wrongTheme]);
-    
-    // 4개 선택지 생성 및 셔플
-    const allAnswers = [...correctStocks, wrongStock];
-    const shuffledAnswers = shuffleArray(allAnswers);
-    
-    const questionText = `${selectedTheme} 관련주에 해당하지 않는 종목은?`;
-    
-    return {
-        theme: selectedTheme,
-        question: questionText,
-        answers: shuffledAnswers,
-        correctAnswer: wrongStock,
-        correctTheme: wrongTheme
-    };
+    return uniqueStocks;
 }
 
+// 문제 생성 (중복 방지)
+function generateQuestion(questionIndex) {
+    const selectedTheme = themeOrder[questionIndex];
+    let attempts = 0;
+    let validQuestion = null;
+    while (attempts < 50 && !validQuestion) {
+        attempts++;
+        const themeStocks = [...stockThemes[selectedTheme]];
+        const correctStocks = getUniqueStocks(themeStocks, [], 3);
+        const otherThemes = themeOrder.filter(theme => theme !== selectedTheme);
+        const wrongTheme = getRandomElement(otherThemes);
+        const wrongStocks = getUniqueStocks(stockThemes[wrongTheme], correctStocks, 1);
+        if (correctStocks.length === 3 && wrongStocks.length === 1) {
+            const wrongStock = wrongStocks[0];
+            const allAnswers = [...correctStocks, wrongStock];
+            const shuffledAnswers = shuffleArray(allAnswers);
+            const uniqueAnswers = [...new Set(shuffledAnswers)];
+            if (uniqueAnswers.length === 4) {
+                validQuestion = {
+                    theme: selectedTheme,
+                    question: `${selectedTheme} 관련주에 해당하지 않는 종목은?`,
+                    answers: shuffledAnswers,
+                    correctAnswer: wrongStock,
+                    correctTheme: wrongTheme
+                };
+            }
+        }
+    }
+    if (!validQuestion) {
+        validQuestion = {
+            theme: selectedTheme,
+            question: `${selectedTheme} 관련주에 해당하지 않는 종목은?`,
+            answers: ['기본종목1', '기본종목2', '기본종목3', '기본종목4'],
+            correctAnswer: '기본종목4',
+            correctTheme: '기타'
+        };
+    }
+    return validQuestion;
+}
+
+// 문제 목록 생성
 function generateQuestions() {
     questions = [];
     for (let i = 0; i < totalQuestions; i++) {
@@ -468,78 +333,66 @@ function generateQuestions() {
     }
 }
 
+// 문제 표시
 function displayQuestion() {
     currentQuestion = questions[currentQuestionIndex];
-    
     document.getElementById('themeTitle').textContent = currentQuestion.theme + ' 관련주';
     document.getElementById('question').textContent = currentQuestion.question;
     document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
     document.getElementById('totalQuestions').textContent = totalQuestions;
-    
     const answerButtons = document.querySelectorAll('.answer-btn');
     answerButtons.forEach((btn, index) => {
         btn.textContent = currentQuestion.answers[index];
         btn.className = 'answer-btn';
     });
-    
     const progress = ((currentQuestionIndex) / totalQuestions) * 100;
     document.getElementById('progress').style.width = progress + '%';
 }
 
+// 답안 선택
 function selectAnswer(answerIndex) {
     const selectedStock = currentQuestion.answers[answerIndex];
     const answerButtons = document.querySelectorAll('.answer-btn');
-    
     answerButtons.forEach(btn => btn.classList.add('disabled'));
-    
     let isCorrect = selectedStock === currentQuestion.correctAnswer;
     let modalTitle, modalMessage;
-    
     if (isCorrect) {
         answerButtons[answerIndex].classList.add('correct');
         score++;
         document.getElementById('score').textContent = score;
-        
         modalTitle = '정답입니다!';
         modalMessage = `${selectedStock}은(는) ${currentQuestion.correctTheme} 관련주입니다.`;
         playSound(correctSound);
+        showCelebration();
     } else {
         answerButtons[answerIndex].classList.add('wrong');
-        
         const correctIndex = currentQuestion.answers.findIndex(answer => answer === currentQuestion.correctAnswer);
         if (correctIndex !== -1) {
             answerButtons[correctIndex].classList.add('correct');
         }
-        
         modalTitle = '오답입니다.';
-        modalMessage = `${selectedStock}은(는) ${currentQuestion.theme} 관련주입니다.`;
+        modalMessage = `${currentQuestion.correctAnswer}은(는) ${currentQuestion.correctTheme} 관련주입니다.`;
         playSound(wrongSound);
     }
-    
     setTimeout(() => {
         const modalTitleElement = document.getElementById('modalTitle');
-        if (isCorrect) {
-            modalTitleElement.style.color = '#28a745';
-        } else {
-            modalTitleElement.style.color = '#dc3545';
-        }
+        modalTitleElement.style.color = isCorrect ? '#28a745' : '#dc3545';
     }, 100);
-    
     showModal(modalTitle, modalMessage);
 }
 
+// 모달 표시
 function showModal(title, message) {
     document.getElementById('modalTitle').textContent = title;
     document.getElementById('modalMessage').textContent = message;
     document.getElementById('resultModal').style.display = 'block';
 }
 
+// 모달 닫기 및 다음 문제
 function closeModalAndNext() {
     document.getElementById('resultModal').style.display = 'none';
-    
     setTimeout(() => {
         currentQuestionIndex++;
-        
         if (currentQuestionIndex < totalQuestions) {
             displayQuestion();
         } else {
@@ -548,14 +401,13 @@ function closeModalAndNext() {
     }, 300);
 }
 
+// 결과 화면 표시
 function showResult() {
     document.querySelector('.quiz-container').style.display = 'none';
     document.getElementById('resultScreen').style.display = 'flex';
-    
     const percentage = (score / totalQuestions) * 100;
     document.getElementById('finalScore').textContent = score;
     document.getElementById('totalQuestionsDisplay').textContent = totalQuestions;
-    
     let resultMessage;
     if (percentage >= 80) {
         resultMessage = '훌륭합니다! 주식 테마 전문가군요! 🎉';
@@ -566,23 +418,22 @@ function showResult() {
     } else {
         resultMessage = '아직 공부가 더 필요해요! 화이팅! 💪';
     }
-    
     document.getElementById('resultMessage').textContent = resultMessage;
     playSound(completeSound);
 }
 
+// 퀴즈 재시작
 function restartQuiz() {
     currentQuestionIndex = 0;
     score = 0;
-    
     document.getElementById('score').textContent = score;
     document.querySelector('.quiz-container').style.display = 'flex';
     document.getElementById('resultScreen').style.display = 'none';
-    
     generateQuestions();
     displayQuestion();
 }
 
+// 초기화
 function initQuiz() {
     generateQuestions();
     displayQuestion();
