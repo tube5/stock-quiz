@@ -1,1 +1,806 @@
+<!DOCTYPE html>
+<html>
 
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>특징종목퀴즈 20250528</title>
+
+  <style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.app {
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 9/16;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    border-radius: 25px;
+    padding: 25px 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.quiz-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.score-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #4facfe;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.header h1 {
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 25px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.progress-container {
+    margin-bottom: 25px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.progress {
+    height: 100%;
+    background: linear-gradient(90deg, #4facfe, #00f2fe);
+    border-radius: 10px;
+    transition: width 0.3s ease;
+    width: 0%;
+}
+
+.question-info {
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.question-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.question-container h2 {
+    color: #333;
+    font-size: 18px;
+    line-height: 1.4;
+    padding: 25px 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    font-weight: 600;
+    width: 100%;
+}
+
+.answers-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.answer-btn {
+    background: white;
+    color: #333;
+    border: 2px solid #e0e0e0;
+    border-radius: 15px;
+    padding: 18px 15px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.answer-btn:hover {
+    background: #f5f5f5;
+    border-color: #4facfe;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(79, 172, 254, 0.3);
+}
+
+.answer-btn:active {
+    transform: translateY(0);
+}
+
+.answer-btn.correct {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    border-color: #28a745;
+    animation: correctPulse 0.6s ease;
+}
+
+.answer-btn.wrong {
+    background: linear-gradient(135deg, #dc3545, #fd7e14);
+    color: white;
+    border-color: #dc3545;
+    animation: wrongShake 0.6s ease;
+}
+
+.answer-btn.disabled {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+@keyframes correctPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes wrongShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.result-screen {
+    text-align: center;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.result-screen h2 {
+    color: white;
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.final-score {
+    font-size: 48px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.restart-btn {
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+.restart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 40px 30px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 350px;
+    text-align: center;
+    animation: slideIn 0.3s ease;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.modal-content p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    font-size: 16px;
+}
+
+.modal-btn {
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 15px 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.modal-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+}
+
+.celebration {
+    position: fixed;
+    pointer-events: none;
+    font-size: 50px;
+    opacity: 0;
+    z-index: 2000;
+}
+
+@keyframes celebrate {
+    0% { transform: translateY(0) scale(0); opacity: 1; }
+    50% { transform: translateY(-100px) scale(1.5); opacity: 1; }
+    100% { transform: translateY(-200px) scale(2); opacity: 0; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { 
+        transform: translate(-50%, -60%); 
+        opacity: 0; 
+    }
+    to { 
+        transform: translate(-50%, -50%); 
+        opacity: 1; 
+    }
+}
+
+@media (max-width: 480px) {
+    .app {
+        max-width: 100%;
+        margin: 0;
+        border-radius: 0;
+        aspect-ratio: auto;
+        min-height: 100vh;
+    }
+    
+    .header h1 {
+        font-size: 20px;
+    }
+    
+    .question-container h2 {
+        font-size: 16px;
+        padding: 20px 15px;
+    }
+    
+    .answer-btn {
+        font-size: 14px;
+        padding: 16px 12px;
+        height: 55px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        padding: 30px 20px;
+    }
+}
+
+  </style>
+
+  
+</head>
+<body>
+  <div class="app">
+    <div class="quiz-container">
+        <div class="header">
+            <div class="score-badge">점수: <span id="score">0</span></div>
+            <h1 id="quizTitle">특징주 퀴즈</h1>
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+            <div class="question-info">
+                <span id="currentQuestion">1</span> / <span id="totalQuestions">10</span>
+            </div>
+        </div>
+        <div class="question-container">
+            <h2 id="question">문제 로딩 중...</h2>
+        </div>
+        <div class="answers-container">
+            <button class="answer-btn" data-index="0">선택지 1</button>
+            <button class="answer-btn" data-index="1">선택지 2</button>
+            <button class="answer-btn" data-index="2">선택지 3</button>
+            <button class="answer-btn" data-index="3">선택지 4</button>
+        </div>
+    </div>
+    <div class="result-screen" id="resultScreen" style="display: none;">
+        <h2>퀴즈 완료!</h2>
+        <div class="final-score">
+            <span id="finalScore"></span> / 100점
+        </div>
+        <p id="resultMessage"></p>
+        <button class="restart-btn" id="restartBtn">다시 시작</button>
+    </div>
+</div>
+
+<div id="resultModal" class="modal">
+    <div class="modal-content">
+        <h3 id="modalTitle">정답입니다!</h3>
+        <p id="modalMessage">설명이 여기에 표시됩니다</p>
+        <button class="modal-btn" id="nextBtn">다음 문제</button>
+    </div>
+</div>
+
+<div id="celebration" class="celebration">🎉</div>
+
+<!-- 브라우저 호환 사운드 시스템 -->
+<div id="soundSystem" style="display: none;">
+    <iframe id="soundFrame" src="about:blank" style="width:1px;height:1px;"></iframe>
+</div>
+
+
+  <script>
+    // 특징주 문제 데이터
+const quizData = [
+    {
+        question: "블록체인 기반 원화 스테이블 코인 사업 진출로 주목받는 종목은?",
+        answers: ["SK", "인스코비", "LG이노텍", "NAVER"],
+        correct: "인스코비",
+        explanation: "원화 스테이블코인 사업",
+        category: "블록체인"
+    },
+    {
+        question: "세계 최초 5G 광대역 위성통신 지원 차량용 통신모듈 개발 종목은?",
+        answers: ["삼영", "KCC", "LG이노텍", "진에어"],
+        correct: "LG이노텍",
+        explanation: "차량용 5G 모듈 개발",
+        category: "차량부품"
+    },
+    {
+        question: "ASCO 2025에서 AI 기반 암 조기 진단 기술 발표 예정인 종목은?",
+        answers: ["온코크로스", "코어라인소프트", "비큐AI", "크라우드웍스"],
+        correct: "온코크로스",
+        explanation: "AI 암 조기진단 기술",
+        category: "바이오테크"
+    },
+    {
+        question: "폴더블폰 힌지 모듈로 최고 매출 경신 기대를 받는 종목은?",
+        answers: ["심텍", "KH바텍", "파워넷", "제이오"],
+        correct: "KH바텍",
+        explanation: "폴더블폰 힌지 전문",
+        category: "스마트폰부품"
+    },
+    {
+        question: "일본 시니어 전문기업과 헬스케어 사업 파트너십을 체결한 그룹은?",
+        answers: ["SK그룹", "KCC그룹", "HLB그룹", "엘브이엠씨그룹"],
+        correct: "HLB그룹",
+        explanation: "일본 시니어 헬스케어",
+        category: "헬스케어"
+    },
+    {
+        question: "미국 현지 법인 설립으로 탄소나노튜브 사업 확장하는 종목은?",
+        answers: ["제이오", "파워넷", "아이씨티케이", "스코넥"],
+        correct: "제이오",
+        explanation: "미국 진출 탄소나노튜브",
+        category: "신소재"
+    },
+    {
+        question: "AI 교육 서비스로 2년 연속 국비지원 사업자 선정된 종목은?",
+        answers: ["비큐AI", "크라우드웍스", "MDS테크", "온코크로스"],
+        correct: "크라우드웍스",
+        explanation: "AI 교육서비스 전문",
+        category: "교육테크"
+    },
+    {
+        question: "베링거인겔하임에 AI 폐 영상분석 소프트웨어 공급하는 종목은?",
+        answers: ["코어라인소프트", "온코크로스", "소룩스", "케이엠제약"],
+        correct: "코어라인소프트",
+        explanation: "AI 폐영상 분석전문",
+        category: "메디테크"
+    },
+    {
+        question: "라오스·베트남 사업 호조로 1분기 매출 42% 증가한 종목은?",
+        answers: ["자이에스앤디", "엘브이엠씨홀딩스", "진에어", "다보링크"],
+        correct: "엘브이엠씨홀딩스",
+        explanation: "동남아 사업 확장",
+        category: "해외사업"
+    },
+    {
+        question: "양자 기술 기반 콜드월렛 보안 솔루션 개발하는 종목은?",
+        answers: ["아이씨티케이", "스코넥", "인스코비", "비큐AI"],
+        correct: "아이씨티케이",
+        explanation: "양자 콜드월렛 보안",
+        category: "보안기술"
+    },
+    {
+        question: "BOPP 필름에서 커패시터 필름으로 사업 전환 중인 종목은?",
+        answers: ["KCC", "삼영", "심텍", "파워넷"],
+        correct: "삼영",
+        explanation: "커패시터 필름 전환",
+        category: "화학소재"
+    },
+    {
+        question: "NB브랜드 '폼글'로 미국 FDA OTC 등록 완료한 종목은?",
+        answers: ["소룩스", "케이엠제약", "코어라인소프트", "온코크로스"],
+        correct: "케이엠제약",
+        explanation: "폼글 미국 진출",
+        category: "구강케어"
+    },
+    {
+        question: "퓨리오사AI 투자펀드에 참여한 AI 반도체 관련 종목은?",
+        answers: ["비큐AI", "크라우드웍스", "제이오", "파워넷"],
+        correct: "비큐AI",
+        explanation: "AI 반도체 투자",
+        category: "AI반도체"
+    },
+    {
+        question: "에어부산·에어서울과의 통합을 준비 중인 LCC 종목은?",
+        answers: ["진에어", "자이에스앤디", "엘브이엠씨홀딩스", "다보링크"],
+        correct: "진에어",
+        explanation: "LCC 통합 추진",
+        category: "항공운송"
+    },
+    {
+        question: "경영권 매각 난항으로 상장폐지 위기에 놓인 종목은?",
+        answers: ["스코넥", "다보링크", "빛과전자", "소룩스"],
+        correct: "다보링크",
+        explanation: "경영권 매각 난항",
+        category: "구조조정"
+    }
+];
+
+// 전역 변수
+let currentQuestionIndex = 0;
+let score = 0;
+let totalQuestions = 10;
+let selectedQuestions = [];
+let currentQuestion = null;
+let audioEnabled = false;
+
+// 브라우저 호환 사운드 시스템
+const SoundSystem = {
+    context: null,
+    
+    // 오디오 컨텍스트 초기화
+    init: function() {
+        try {
+            this.context = new (window.AudioContext || window.webkitAudioContext)();
+            audioEnabled = true;
+            console.log('🔊 사운드 시스템 초기화 완료');
+        } catch (e) {
+            console.log('⚠️ 사운드 시스템 초기화 실패:', e);
+            audioEnabled = false;
+        }
+    },
+    
+    // beep 사운드 생성 및 재생
+    beep: function(frequency = 800, duration = 200, type = 'sine') {
+        if (!audioEnabled || !this.context) return;
+        
+        try {
+            const oscillator = this.context.createOscillator();
+            const gainNode = this.context.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(this.context.destination);
+            
+            oscillator.frequency.value = frequency;
+            oscillator.type = type;
+            
+            gainNode.gain.setValueAtTime(0.1, this.context.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, this.context.currentTime + duration / 1000);
+            
+            oscillator.start(this.context.currentTime);
+            oscillator.stop(this.context.currentTime + duration / 1000);
+            
+            console.log(`🎵 ${frequency}Hz beep 재생`);
+        } catch (e) {
+            console.log('사운드 재생 실패:', e);
+        }
+    },
+    
+    // 멜로디 재생
+    melody: function(notes, noteDuration = 150) {
+        if (!audioEnabled) return;
+        
+        notes.forEach((freq, index) => {
+            setTimeout(() => {
+                this.beep(freq, noteDuration);
+            }, index * noteDuration);
+        });
+    }
+};
+
+// 사운드 재생 함수들
+function playCorrectSound() {
+    if (audioEnabled) {
+        // 성공 멜로디 (도-미-솔)
+        SoundSystem.melody([523, 659, 784], 200);
+        console.log('✅ 정답 사운드 재생');
+    }
+}
+
+function playWrongSound() {
+    if (audioEnabled) {
+        // 실패 사운드 (낮은 음)
+        SoundSystem.beep(200, 400, 'sawtooth');
+        console.log('❌ 오답 사운드 재생');
+    }
+}
+
+function playCompleteSound() {
+    if (audioEnabled) {
+        // 완료 팡파르
+        SoundSystem.melody([523, 659, 784, 1047], 300);
+        console.log('🎉 완료 사운드 재생');
+    }
+}
+
+// 폭죽 효과
+function showCelebration() {
+    const celebration = document.getElementById('celebration');
+    celebration.style.left = Math.random() * 80 + '%';
+    celebration.style.top = Math.random() * 50 + 30 + '%';
+    celebration.style.animation = 'celebrate 1.5s ease-out';
+    celebration.style.opacity = '1';
+    
+    setTimeout(() => {
+        celebration.style.opacity = '0';
+    }, 1500);
+}
+
+// 배열 셔플
+function shuffleArray(array) {
+    const newArray = [...array];
+    for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
+}
+
+// 15개 문제 중 10개 랜덤 선택
+function selectUniqueQuestions() {
+    const indices = Array.from({length: quizData.length}, (_, i) => i);
+    const shuffledIndices = shuffleArray(indices);
+    const selectedIndices = shuffledIndices.slice(0, totalQuestions);
+    
+    selectedQuestions = selectedIndices.map(index => ({
+        ...quizData[index],
+        originalIndex: index
+    }));
+}
+
+// 문제 표시
+function displayQuestion() {
+    currentQuestion = selectedQuestions[currentQuestionIndex];
+    
+    // 보기 순서 랜덤으로 섞기
+    const shuffledAnswers = shuffleArray([...currentQuestion.answers]);
+    currentQuestion.shuffledAnswers = shuffledAnswers;
+    currentQuestion.correctIndex = shuffledAnswers.findIndex(answer => answer === currentQuestion.correct);
+    
+    document.getElementById('question').textContent = currentQuestion.question;
+    document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+    document.getElementById('totalQuestions').textContent = totalQuestions;
+    
+    const answerButtons = document.querySelectorAll('.answer-btn');
+    answerButtons.forEach((btn, index) => {
+        btn.textContent = shuffledAnswers[index];
+        btn.className = 'answer-btn';
+        btn.disabled = false;
+    });
+    
+    const progress = ((currentQuestionIndex) / totalQuestions) * 100;
+    document.getElementById('progress').style.width = progress + '%';
+}
+
+// 답안 선택 함수
+function selectAnswer(answerIndex) {
+    // 사운드 시스템 활성화 (사용자 상호작용 후)
+    if (!audioEnabled) {
+        SoundSystem.init();
+    }
+    
+    const answerButtons = document.querySelectorAll('.answer-btn');
+    answerButtons.forEach(btn => {
+        btn.classList.add('disabled');
+        btn.disabled = true;
+    });
+    
+    let isCorrect = answerIndex === currentQuestion.correctIndex;
+    let modalTitle, modalMessage;
+    
+    if (isCorrect) {
+        answerButtons[answerIndex].classList.add('correct');
+        score += 10;
+        document.getElementById('score').textContent = score;
+        
+        modalTitle = '정답입니다!';
+        modalMessage = `${currentQuestion.explanation}<br>${currentQuestion.category} 관련주는 ${currentQuestion.correct}입니다`;
+        playCorrectSound();
+        showCelebration();
+    } else {
+        answerButtons[answerIndex].classList.add('wrong');
+        answerButtons[currentQuestion.correctIndex].classList.add('correct');
+        
+        modalTitle = '오답입니다.';
+        modalMessage = `${currentQuestion.explanation}<br>${currentQuestion.category} 관련주는 ${currentQuestion.correct}입니다`;
+        playWrongSound();
+    }
+    
+    setTimeout(() => {
+        showModal(modalTitle, modalMessage, isCorrect);
+    }, 500);
+}
+
+// 모달 표시
+function showModal(title, message, isCorrect) {
+    const modal = document.getElementById('resultModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalMessage = document.getElementById('modalMessage');
+    
+    modalTitle.textContent = title;
+    modalTitle.style.color = isCorrect ? '#28a745' : '#dc3545';
+    modalMessage.innerHTML = message;
+    
+    modal.style.display = 'block';
+}
+
+// 모달 닫기 및 다음 문제
+function closeModalAndNext() {
+    document.getElementById('resultModal').style.display = 'none';
+    
+    setTimeout(() => {
+        currentQuestionIndex++;
+        
+        if (currentQuestionIndex < totalQuestions) {
+            displayQuestion();
+        } else {
+            showResult();
+        }
+    }, 300);
+}
+
+// 결과 화면
+function showResult() {
+    document.querySelector('.quiz-container').style.display = 'none';
+    document.getElementById('resultScreen').style.display = 'flex';
+    
+    const percentage = (score / 100) * 100;
+    document.getElementById('finalScore').textContent = score;
+    
+    let resultMessage;
+    if (percentage >= 80) {
+        resultMessage = '훌륭합니다! 특징주 전문가군요! 🎉';
+    } else if (percentage >= 60) {
+        resultMessage = '좋습니다! 시장 감각이 뛰어나네요! 📈';
+    } else if (percentage >= 40) {
+        resultMessage = '괜찮습니다! 조금 더 공부해보세요! 📚';
+    } else {
+        resultMessage = '아직 공부가 더 필요해요! 화이팅! 💪';
+    }
+    
+    document.getElementById('resultMessage').textContent = resultMessage;
+    playCompleteSound();
+}
+
+// 퀴즈 재시작
+function restartQuiz() {
+    currentQuestionIndex = 0;
+    score = 0;
+    
+    document.getElementById('score').textContent = score;
+    document.querySelector('.quiz-container').style.display = 'flex';
+    document.getElementById('resultScreen').style.display = 'none';
+    
+    selectUniqueQuestions();
+    displayQuestion();
+}
+
+// 초기화
+function initQuiz() {
+    selectUniqueQuestions();
+    displayQuestion();
+}
+
+// DOM 로드 후 이벤트 리스너 설정
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 퀴즈 초기화 시작');
+    
+    // 답안 버튼 이벤트 리스너
+    const answerButtons = document.querySelectorAll('.answer-btn');
+    answerButtons.forEach((btn, index) => {
+        btn.addEventListener('click', function() {
+            selectAnswer(index);
+        });
+    });
+    
+    // 다음 문제 버튼
+    document.getElementById('nextBtn').addEventListener('click', closeModalAndNext);
+    
+    // 재시작 버튼
+    document.getElementById('restartBtn').addEventListener('click', restartQuiz);
+    
+    // 모달 외부 클릭
+    document.getElementById('resultModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeModalAndNext();
+        }
+    });
+    
+    // 퀴즈 시작
+    initQuiz();
+});
+
+// 전역 함수 노출
+window.selectAnswer = selectAnswer;
+window.closeModalAndNext = closeModalAndNext;
+window.restartQuiz = restartQuiz;
+
+  </script>
+</body>
+</html>
