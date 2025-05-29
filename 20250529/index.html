@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>특징종목퀴즈 20250528</title>
+  <title>JSFiddle o8emrL17</title>
 
   <style>
     * {
@@ -287,20 +287,6 @@ body {
     box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
 }
 
-.celebration {
-    position: fixed;
-    pointer-events: none;
-    font-size: 50px;
-    opacity: 0;
-    z-index: 2000;
-}
-
-@keyframes celebrate {
-    0% { transform: translateY(0) scale(0); opacity: 1; }
-    50% { transform: translateY(-100px) scale(1.5); opacity: 1; }
-    100% { transform: translateY(-200px) scale(2); opacity: 0; }
-}
-
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -394,121 +380,102 @@ body {
     </div>
 </div>
 
-<div id="celebration" class="celebration">🎉</div>
-
-<!-- 브라우저 호환 사운드 시스템 -->
-<div id="soundSystem" style="display: none;">
-    <iframe id="soundFrame" src="about:blank" style="width:1px;height:1px;"></iframe>
-</div>
+<!-- js-confetti 라이브러리 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
 
 
   <script>
-    // 특징주 문제 데이터
+    // 오늘의 특징주 문제 데이터 (15개)
 const quizData = [
     {
-        question: "블록체인 기반 원화 스테이블 코인 사업 진출로 주목받는 종목은?",
-        answers: ["SK", "인스코비", "LG이노텍", "NAVER"],
-        correct: "인스코비",
-        explanation: "원화 스테이블코인 사업",
-        category: "블록체인"
+        question: "생분해성 포장재 관련 정책 발표로 주목받는 종목은?",
+        answers: ["한국팩키지", "에코플라스틱", "진영", "대한광통신"],
+        correct: "한국팩키지",
+        theme: "생분해성 포장재"
     },
     {
-        question: "세계 최초 5G 광대역 위성통신 지원 차량용 통신모듈 개발 종목은?",
-        answers: ["삼영", "KCC", "LG이노텍", "진에어"],
-        correct: "LG이노텍",
-        explanation: "차량용 5G 모듈 개발",
-        category: "차량부품"
+        question: "조현범 회장의 1심 법정구속 소식으로 급등한 종목은?",
+        answers: ["하이브", "한국앤컴퍼니", "유나이티드제약", "전진건설로봇"],
+        correct: "한국앤컴퍼니",
+        theme: "조현범 회장의 1심 법정구속"
     },
     {
-        question: "ASCO 2025에서 AI 기반 암 조기 진단 기술 발표 예정인 종목은?",
-        answers: ["온코크로스", "코어라인소프트", "비큐AI", "크라우드웍스"],
-        correct: "온코크로스",
-        explanation: "AI 암 조기진단 기술",
-        category: "바이오테크"
+        question: "전기차 전환 최대 수혜주로 분석받는 종목은?",
+        answers: ["HD현대마린엔진", "한국단자", "HS효성", "현대로템"],
+        correct: "한국단자",
+        theme: "전기차 전환 최대 수혜주"
     },
     {
-        question: "폴더블폰 힌지 모듈로 최고 매출 경신 기대를 받는 종목은?",
-        answers: ["심텍", "KH바텍", "파워넷", "제이오"],
-        correct: "KH바텍",
-        explanation: "폴더블폰 힌지 전문",
-        category: "스마트폰부품"
+        question: "미국 제약바이오 기업과 5,953억원 기술이전 계약 종목은?",
+        answers: ["HLB펩", "나이벡", "유나이티드제약", "인크로스"],
+        correct: "나이벡",
+        theme: "미국 제약바이오 기업과 5,953억원 기술이전 계약"
     },
     {
-        question: "일본 시니어 전문기업과 헬스케어 사업 파트너십을 체결한 그룹은?",
-        answers: ["SK그룹", "KCC그룹", "HLB그룹", "엘브이엠씨그룹"],
-        correct: "HLB그룹",
-        explanation: "일본 시니어 헬스케어",
-        category: "헬스케어"
+        question: "미국 수주잔고가 750% 급증한 종목은?",
+        answers: ["대한광통신", "유디엠텍", "신원종합개발", "KX"],
+        correct: "대한광통신",
+        theme: "미국 수주잔고가 750% 급증"
     },
     {
-        question: "미국 현지 법인 설립으로 탄소나노튜브 사업 확장하는 종목은?",
-        answers: ["제이오", "파워넷", "아이씨티케이", "스코넥"],
-        correct: "제이오",
-        explanation: "미국 진출 탄소나노튜브",
-        category: "신소재"
+        question: "K2 전차 수요 증가로 성장 전망을 받는 종목은?",
+        answers: ["전진건설로봇", "현대로템", "HD현대마린엔진", "한국단자"],
+        correct: "현대로템",
+        theme: "K2 전차 수요 증가로 성장 전망"
     },
     {
-        question: "AI 교육 서비스로 2년 연속 국비지원 사업자 선정된 종목은?",
-        answers: ["비큐AI", "크라우드웍스", "MDS테크", "온코크로스"],
-        correct: "크라우드웍스",
-        explanation: "AI 교육서비스 전문",
-        category: "교육테크"
+        question: "북미 시장점유율 27.5%로 1위를 기록하는 종목은?",
+        answers: ["전진건설로봇", "현대로템", "HD현대마린엔진", "유디엠텍"],
+        correct: "전진건설로봇",
+        theme: "북미 시장점유율 27.5%로 1위"
     },
     {
-        question: "베링거인겔하임에 AI 폐 영상분석 소프트웨어 공급하는 종목은?",
-        answers: ["코어라인소프트", "온코크로스", "소룩스", "케이엠제약"],
-        correct: "코어라인소프트",
-        explanation: "AI 폐영상 분석전문",
-        category: "메디테크"
+        question: "니케 중국 출시로 안정적 매출 전망을 받는 종목은?",
+        answers: ["하이브", "시프트업", "KX", "인크로스"],
+        correct: "시프트업",
+        theme: "니케 중국 출시로 안정적 매출 전망"
     },
     {
-        question: "라오스·베트남 사업 호조로 1분기 매출 42% 증가한 종목은?",
-        answers: ["자이에스앤디", "엘브이엠씨홀딩스", "진에어", "다보링크"],
-        correct: "엘브이엠씨홀딩스",
-        explanation: "동남아 사업 확장",
-        category: "해외사업"
+        question: "대만 식약처에서 데모프레신 품목허가를 받은 종목은?",
+        answers: ["나이벡", "HLB펩", "유나이티드제약", "메디콕스"],
+        correct: "HLB펩",
+        theme: "대만 식약처에서 데모프레신 품목허가"
     },
     {
-        question: "양자 기술 기반 콜드월렛 보안 솔루션 개발하는 종목은?",
-        answers: ["아이씨티케이", "스코넥", "인스코비", "비큐AI"],
-        correct: "아이씨티케이",
-        explanation: "양자 콜드월렛 보안",
-        category: "보안기술"
+        question: "개량 신약 개발로 저평가 분석을 받는 종목은?",
+        answers: ["유나이티드제약", "HLB펩", "나이벡", "이니텍"],
+        correct: "유나이티드제약",
+        theme: "개량 신약 개발로 저평가 분석"
     },
     {
-        question: "BOPP 필름에서 커패시터 필름으로 사업 전환 중인 종목은?",
-        answers: ["KCC", "삼영", "심텍", "파워넷"],
-        correct: "삼영",
-        explanation: "커패시터 필름 전환",
-        category: "화학소재"
+        question: "생분해 플라스틱 관련주가 아닌 것은?",
+        answers: ["에코플라스틱", "진영", "한국팩키지", "대한광통신"],
+        correct: "대한광통신",
+        theme: "생분해 플라스틱 관련주가 아닌 것"
     },
     {
-        question: "NB브랜드 '폼글'로 미국 FDA OTC 등록 완료한 종목은?",
-        answers: ["소룩스", "케이엠제약", "코어라인소프트", "온코크로스"],
-        correct: "케이엠제약",
-        explanation: "폼글 미국 진출",
-        category: "구강케어"
+        question: "옵트라 플랫폼을 미국에 첫 공개한 종목은?",
+        answers: ["유디엠텍", "인크로스", "신한제16호스팩", "신원종합개발"],
+        correct: "유디엠텍",
+        theme: "옵트라 플랫폼을 미국에 첫 공개"
     },
     {
-        question: "퓨리오사AI 투자펀드에 참여한 AI 반도체 관련 종목은?",
-        answers: ["비큐AI", "크라우드웍스", "제이오", "파워넷"],
-        correct: "비큐AI",
-        explanation: "AI 반도체 투자",
-        category: "AI반도체"
+        question: "SKT 해킹 수혜 기대감으로 상승한 종목은?",
+        answers: ["KX", "인크로스", "유디엠텍", "대한광통신"],
+        correct: "인크로스",
+        theme: "SKT 해킹 수혜 기대감"
     },
     {
-        question: "에어부산·에어서울과의 통합을 준비 중인 LCC 종목은?",
-        answers: ["진에어", "자이에스앤디", "엘브이엠씨홀딩스", "다보링크"],
-        correct: "진에어",
-        explanation: "LCC 통합 추진",
-        category: "항공운송"
+        question: "회계 부정 혐의로 약세를 보인 종목은?",
+        answers: ["이니텍", "메디콕스", "하이브", "한국앤컴퍼니"],
+        correct: "메디콕스",
+        theme: "회계 부정 혐의"
     },
     {
-        question: "경영권 매각 난항으로 상장폐지 위기에 놓인 종목은?",
-        answers: ["스코넥", "다보링크", "빛과전자", "소룩스"],
-        correct: "다보링크",
-        explanation: "경영권 매각 난항",
-        category: "구조조정"
+        question: "HD현대미포와 1,090억원 계약을 체결한 종목은?",
+        answers: ["HD현대마린엔진", "현대로템", "전진건설로봇", "한국단자"],
+        correct: "HD현대마린엔진",
+        theme: "HD현대미포와 1,090억원 계약"
     }
 ];
 
@@ -518,98 +485,109 @@ let score = 0;
 let totalQuestions = 10;
 let selectedQuestions = [];
 let currentQuestion = null;
+let audioContext = null;
 let audioEnabled = false;
+let jsConfetti = null;
 
-// 브라우저 호환 사운드 시스템
-const SoundSystem = {
-    context: null,
+// 🎵 완벽한 음향 시스템 초기화
+function initAudioSystem() {
+    try {
+        // AudioContext 생성 (브라우저 호환성)
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioContext = new AudioContext();
+        audioEnabled = true;
+        console.log('🔊 음향 시스템 활성화 완료!');
+    } catch (error) {
+        console.log('❌ 음향 시스템 초기화 실패:', error);
+        audioEnabled = false;
+    }
+}
+
+// 🎵 Web Audio API로 고품질 사운드 생성
+function createSound(type) {
+    if (!audioEnabled || !audioContext) return;
     
-    // 오디오 컨텍스트 초기화
-    init: function() {
-        try {
-            this.context = new (window.AudioContext || window.webkitAudioContext)();
-            audioEnabled = true;
-            console.log('🔊 사운드 시스템 초기화 완료');
-        } catch (e) {
-            console.log('⚠️ 사운드 시스템 초기화 실패:', e);
-            audioEnabled = false;
-        }
-    },
-    
-    // beep 사운드 생성 및 재생
-    beep: function(frequency = 800, duration = 200, type = 'sine') {
-        if (!audioEnabled || !this.context) return;
+    try {
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
         
-        try {
-            const oscillator = this.context.createOscillator();
-            const gainNode = this.context.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(this.context.destination);
-            
-            oscillator.frequency.value = frequency;
-            oscillator.type = type;
-            
-            gainNode.gain.setValueAtTime(0.1, this.context.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, this.context.currentTime + duration / 1000);
-            
-            oscillator.start(this.context.currentTime);
-            oscillator.stop(this.context.currentTime + duration / 1000);
-            
-            console.log(`🎵 ${frequency}Hz beep 재생`);
-        } catch (e) {
-            console.log('사운드 재생 실패:', e);
-        }
-    },
-    
-    // 멜로디 재생
-    melody: function(notes, noteDuration = 150) {
-        if (!audioEnabled) return;
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
         
-        notes.forEach((freq, index) => {
-            setTimeout(() => {
-                this.beep(freq, noteDuration);
-            }, index * noteDuration);
-        });
-    }
-};
-
-// 사운드 재생 함수들
-function playCorrectSound() {
-    if (audioEnabled) {
-        // 성공 멜로디 (도-미-솔)
-        SoundSystem.melody([523, 659, 784], 200);
-        console.log('✅ 정답 사운드 재생');
-    }
-}
-
-function playWrongSound() {
-    if (audioEnabled) {
-        // 실패 사운드 (낮은 음)
-        SoundSystem.beep(200, 400, 'sawtooth');
-        console.log('❌ 오답 사운드 재생');
-    }
-}
-
-function playCompleteSound() {
-    if (audioEnabled) {
-        // 완료 팡파르
-        SoundSystem.melody([523, 659, 784, 1047], 300);
-        console.log('🎉 완료 사운드 재생');
+        switch(type) {
+            case 'correct':
+                // 🎶 정답: 아름다운 상승 하모니 (C-E-G-C)
+                playMelody([261.63, 329.63, 392.00, 523.25], 0.15, 'sine');
+                break;
+                
+            case 'wrong':
+                // ❌ 오답: 하강 buzzer 사운드
+                oscillator.frequency.setValueAtTime(300, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(150, audioContext.currentTime + 0.6);
+                oscillator.type = 'square';
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.6);
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + 0.6);
+                break;
+                
+            case 'complete':
+                // 🎉 완료: 환상적인 팡파르 (C-E-G-C-E-G-C)
+                playMelody([261.63, 329.63, 392.00, 523.25, 659.25, 783.99, 1046.50], 0.2, 'triangle');
+                break;
+        }
+    } catch (error) {
+        console.log('사운드 재생 오류:', error);
     }
 }
 
-// 폭죽 효과
-function showCelebration() {
-    const celebration = document.getElementById('celebration');
-    celebration.style.left = Math.random() * 80 + '%';
-    celebration.style.top = Math.random() * 50 + 30 + '%';
-    celebration.style.animation = 'celebrate 1.5s ease-out';
-    celebration.style.opacity = '1';
+// 🎵 멜로디 재생 함수
+function playMelody(frequencies, noteDuration, waveType = 'sine') {
+    frequencies.forEach((freq, index) => {
+        setTimeout(() => {
+            const osc = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+            
+            osc.connect(gain);
+            gain.connect(audioContext.destination);
+            
+            osc.frequency.value = freq;
+            osc.type = waveType;
+            
+            gain.gain.setValueAtTime(0.15, audioContext.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + noteDuration);
+            
+            osc.start();
+            osc.stop(audioContext.currentTime + noteDuration);
+        }, index * (noteDuration * 1000));
+    });
+}
+
+// 🎉 js-confetti로 환상적인 폭죽가루 효과
+function createConfettiEffect() {
+    if (!jsConfetti) {
+        jsConfetti = new JSConfetti();
+    }
     
+    // 🌈 컬러풀한 폭죽가루 효과
+    jsConfetti.addConfetti({
+        confettiColors: [
+            '#ff0a54', '#ff477e', '#ff7096', '#ff85a1', 
+            '#fbb1bd', '#f9bec7', '#4facfe', '#00f2fe',
+            '#FFD700', '#FF69B4', '#00CED1', '#32CD32'
+        ],
+        confettiRadius: 4,
+        confettiNumber: 100,
+    });
+    
+    // 0.5초 후 추가 폭죽가루
     setTimeout(() => {
-        celebration.style.opacity = '0';
-    }, 1500);
+        jsConfetti.addConfetti({
+            confettiColors: ['#FFD700', '#FFA500', '#FF6347'],
+            confettiRadius: 3,
+            confettiNumber: 50,
+        });
+    }, 500);
 }
 
 // 배열 셔플
@@ -634,7 +612,7 @@ function selectUniqueQuestions() {
     }));
 }
 
-// 문제 표시
+// 문제 표시 (보기 순서도 매번 랜덤)
 function displayQuestion() {
     currentQuestion = selectedQuestions[currentQuestionIndex];
     
@@ -658,11 +636,11 @@ function displayQuestion() {
     document.getElementById('progress').style.width = progress + '%';
 }
 
-// 답안 선택 함수
+// 답안 선택
 function selectAnswer(answerIndex) {
-    // 사운드 시스템 활성화 (사용자 상호작용 후)
+    // 🎵 첫 클릭 시 오디오 시스템 활성화
     if (!audioEnabled) {
-        SoundSystem.init();
+        initAudioSystem();
     }
     
     const answerButtons = document.querySelectorAll('.answer-btn');
@@ -680,16 +658,20 @@ function selectAnswer(answerIndex) {
         document.getElementById('score').textContent = score;
         
         modalTitle = '정답입니다!';
-        modalMessage = `${currentQuestion.explanation}<br>${currentQuestion.category} 관련주는 ${currentQuestion.correct}입니다`;
-        playCorrectSound();
-        showCelebration();
+        modalMessage = `${currentQuestion.theme} 관련주는 ${currentQuestion.correct}입니다`;
+        
+        // 🎵🎉 정답 효과: 음향 + 폭죽가루
+        createSound('correct');
+        createConfettiEffect();
     } else {
         answerButtons[answerIndex].classList.add('wrong');
         answerButtons[currentQuestion.correctIndex].classList.add('correct');
         
         modalTitle = '오답입니다.';
-        modalMessage = `${currentQuestion.explanation}<br>${currentQuestion.category} 관련주는 ${currentQuestion.correct}입니다`;
-        playWrongSound();
+        modalMessage = `${currentQuestion.theme} 관련주는 ${currentQuestion.correct}입니다`;
+        
+        // ❌ 오답 음향
+        createSound('wrong');
     }
     
     setTimeout(() => {
@@ -705,7 +687,7 @@ function showModal(title, message, isCorrect) {
     
     modalTitle.textContent = title;
     modalTitle.style.color = isCorrect ? '#28a745' : '#dc3545';
-    modalMessage.innerHTML = message;
+    modalMessage.textContent = message;
     
     modal.style.display = 'block';
 }
@@ -745,7 +727,16 @@ function showResult() {
     }
     
     document.getElementById('resultMessage').textContent = resultMessage;
-    playCompleteSound();
+    
+    // 🎵🎉 완료 음향 + 대형 폭죽가루
+    createSound('complete');
+    if (jsConfetti) {
+        jsConfetti.addConfetti({
+            emojis: ['🎉', '🎊', '🌟', '✨', '🎈'],
+            emojiSize: 50,
+            confettiNumber: 30,
+        });
+    }
 }
 
 // 퀴즈 재시작
@@ -769,8 +760,6 @@ function initQuiz() {
 
 // DOM 로드 후 이벤트 리스너 설정
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 퀴즈 초기화 시작');
-    
     // 답안 버튼 이벤트 리스너
     const answerButtons = document.querySelectorAll('.answer-btn');
     answerButtons.forEach((btn, index) => {
