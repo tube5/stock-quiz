@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>JSFiddle o8emrL17</title>
+  <title>JSFiddle qfywt3zn</title>
 
   <style>
     * {
@@ -194,6 +194,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 20px;
 }
 
 .result-screen h2 {
@@ -201,6 +202,7 @@ body {
     font-size: 28px;
     margin-bottom: 20px;
     text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    text-align: center;
 }
 
 .final-score {
@@ -209,6 +211,16 @@ body {
     color: white;
     margin-bottom: 20px;
     text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+.result-screen p {
+    color: white;
+    font-size: 18px;
+    line-height: 1.5;
+    text-align: center;
+    margin: 0 auto;
+    max-width: 300px;
 }
 
 .restart-btn {
@@ -385,13 +397,13 @@ body {
 
 
   <script>
-    // 오늘의 특징주 문제 데이터 (15개)
+    // 최신 특징주 문제 데이터 (15개)
 const quizData = [
     {
-        question: "생분해성 포장재 관련 정책 발표로 주목받는 종목은?",
-        answers: ["한국팩키지", "에코플라스틱", "진영", "대한광통신"],
-        correct: "한국팩키지",
-        theme: "생분해성 포장재"
+        question: "이론적 배당수익률 200% 가능 분석으로 상한가를 기록한 종목은?",
+        answers: ["HS효성", "한국단자", "현대로템", "시프트업"],
+        correct: "HS효성",
+        theme: "이론적 배당수익률 200% 가능 분석"
     },
     {
         question: "조현범 회장의 1심 법정구속 소식으로 급등한 종목은?",
@@ -400,82 +412,82 @@ const quizData = [
         theme: "조현범 회장의 1심 법정구속"
     },
     {
-        question: "전기차 전환 최대 수혜주로 분석받는 종목은?",
+        question: "전기차 전환 최대 수혜주로 분석받으며 강세를 보인 종목은?",
         answers: ["HD현대마린엔진", "한국단자", "HS효성", "현대로템"],
         correct: "한국단자",
         theme: "전기차 전환 최대 수혜주"
     },
     {
-        question: "미국 제약바이오 기업과 5,953억원 기술이전 계약 종목은?",
+        question: "미국 소재 제약바이오 기업과 약 5,953억원 기술이전 계약을 체결한 종목은?",
         answers: ["HLB펩", "나이벡", "유나이티드제약", "인크로스"],
         correct: "나이벡",
-        theme: "미국 제약바이오 기업과 5,953억원 기술이전 계약"
+        theme: "미국 소재 제약바이오 기업과 약 5,953억원 기술이전 계약"
     },
     {
-        question: "미국 수주잔고가 750% 급증한 종목은?",
+        question: "미국 향 수주잔고가 750% 급증했다고 발표한 종목은?",
         answers: ["대한광통신", "유디엠텍", "신원종합개발", "KX"],
         correct: "대한광통신",
-        theme: "미국 수주잔고가 750% 급증"
+        theme: "미국 향 수주잔고가 750% 급증"
     },
     {
-        question: "K2 전차 수요 증가로 성장 전망을 받는 종목은?",
+        question: "K2 전차 수요 급증에 따른 성장세 지속 전망으로 상승한 종목은?",
         answers: ["전진건설로봇", "현대로템", "HD현대마린엔진", "한국단자"],
         correct: "현대로템",
-        theme: "K2 전차 수요 증가로 성장 전망"
+        theme: "K2 전차 수요 급증에 따른 성장세 지속 전망"
     },
     {
-        question: "북미 시장점유율 27.5%로 1위를 기록하는 종목은?",
+        question: "북미 시장점유율 27.5%로 1위를 기록하며 외형 성장을 지속하는 종목은?",
         answers: ["전진건설로봇", "현대로템", "HD현대마린엔진", "유디엠텍"],
         correct: "전진건설로봇",
         theme: "북미 시장점유율 27.5%로 1위"
     },
     {
-        question: "니케 중국 출시로 안정적 매출 전망을 받는 종목은?",
+        question: "니케 중국 출시로 신작 모멘텀 소멸에도 안정적 매출 전망을 받는 종목은?",
         answers: ["하이브", "시프트업", "KX", "인크로스"],
         correct: "시프트업",
-        theme: "니케 중국 출시로 안정적 매출 전망"
+        theme: "니케 중국 출시로 신작 모멘텀 소멸에도 안정적 매출 전망"
     },
     {
-        question: "대만 식약처에서 데모프레신 품목허가를 받은 종목은?",
+        question: "원료의약품 '데모프레신'의 대만 식약처 품목허가 획득으로 상승한 종목은?",
         answers: ["나이벡", "HLB펩", "유나이티드제약", "메디콕스"],
         correct: "HLB펩",
-        theme: "대만 식약처에서 데모프레신 품목허가"
+        theme: "원료의약품 '데모프레신'의 대만 식약처 품목허가 획득"
     },
     {
-        question: "개량 신약 개발로 저평가 분석을 받는 종목은?",
+        question: "개량 신약 개발로 높은 수익성에도 저평가 분석을 받는 종목은?",
         answers: ["유나이티드제약", "HLB펩", "나이벡", "이니텍"],
         correct: "유나이티드제약",
-        theme: "개량 신약 개발로 저평가 분석"
+        theme: "개량 신약 개발로 높은 수익성에도 저평가 분석"
     },
     {
-        question: "생분해 플라스틱 관련주가 아닌 것은?",
+        question: "생분해 플라스틱 정책 추진 소식에 강세를 보인 관련주가 아닌 것은?",
         answers: ["에코플라스틱", "진영", "한국팩키지", "대한광통신"],
         correct: "대한광통신",
-        theme: "생분해 플라스틱 관련주가 아닌 것"
+        theme: "생분해 플라스틱 정책 추진 소식에 강세를 보인 관련주가 아닌 것"
     },
     {
-        question: "옵트라 플랫폼을 미국에 첫 공개한 종목은?",
+        question: "옵트라 플랫폼을 미국 현지에 첫 공개한 종목은?",
         answers: ["유디엠텍", "인크로스", "신한제16호스팩", "신원종합개발"],
         correct: "유디엠텍",
-        theme: "옵트라 플랫폼을 미국에 첫 공개"
+        theme: "옵트라 플랫폼을 미국 현지에 첫 공개"
     },
     {
-        question: "SKT 해킹 수혜 기대감으로 상승한 종목은?",
+        question: "SKT 해킹 수혜 기대감 및 저평가 분석으로 소폭 상승한 종목은?",
         answers: ["KX", "인크로스", "유디엠텍", "대한광통신"],
         correct: "인크로스",
-        theme: "SKT 해킹 수혜 기대감"
+        theme: "SKT 해킹 수혜 기대감 및 저평가 분석"
     },
     {
-        question: "회계 부정 혐의로 약세를 보인 종목은?",
+        question: "회삿돈 유용·허위공시 혐의로 관련자 소환 소식에 약세를 보인 종목은?",
         answers: ["이니텍", "메디콕스", "하이브", "한국앤컴퍼니"],
         correct: "메디콕스",
-        theme: "회계 부정 혐의"
+        theme: "회삿돈 유용·허위공시 혐의로 관련자 소환"
     },
     {
-        question: "HD현대미포와 1,090억원 계약을 체결한 종목은?",
+        question: "에이치디현대미포와 1,090억원 규모 선박엔진 공급계약을 체결한 종목은?",
         answers: ["HD현대마린엔진", "현대로템", "전진건설로봇", "한국단자"],
         correct: "HD현대마린엔진",
-        theme: "HD현대미포와 1,090억원 계약"
+        theme: "에이치디현대미포와 1,090억원 규모 선박엔진 공급계약"
     }
 ];
 
@@ -492,7 +504,6 @@ let jsConfetti = null;
 // 🎵 완벽한 음향 시스템 초기화
 function initAudioSystem() {
     try {
-        // AudioContext 생성 (브라우저 호환성)
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         audioContext = new AudioContext();
         audioEnabled = true;
@@ -508,12 +519,6 @@ function createSound(type) {
     if (!audioEnabled || !audioContext) return;
     
     try {
-        const oscillator = audioContext.createOscillator();
-        const gainNode = audioContext.createGain();
-        
-        oscillator.connect(gainNode);
-        gainNode.connect(audioContext.destination);
-        
         switch(type) {
             case 'correct':
                 // 🎶 정답: 아름다운 상승 하모니 (C-E-G-C)
@@ -522,6 +527,10 @@ function createSound(type) {
                 
             case 'wrong':
                 // ❌ 오답: 하강 buzzer 사운드
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
                 oscillator.frequency.setValueAtTime(300, audioContext.currentTime);
                 oscillator.frequency.exponentialRampToValueAtTime(150, audioContext.currentTime + 0.6);
                 oscillator.type = 'square';
