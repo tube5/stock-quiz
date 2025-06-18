@@ -1,4 +1,684 @@
 <!DOCTYPE html>
+<html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JSFiddle 58ef0qko</title>
+
+  <style>
+    :root {
+  --color-1: #ffffff;
+  --color-2: #faeae0;
+  --color-3: #ffbf4b;
+  --color-4: #584056;
+}
+
+body {
+  background: linear-gradient(90deg, var(--color-1) 0%, var(--color-1) 25%, var(--color-2) 25%, var(--color-2) 50%, var(--color-3) 50%, var(--color-3) 75%, var(--color-4) 75%, var(--color-4) 100%);
+}:root {
+  --color-1: rgb(55 50 52);
+  --color-2: rgb(232 220 204);
+  --color-3: rgb(243 236 228);
+  --color-4: rgb(216 67 57);
+}
+
+body {
+  background: linear-gradient(90deg, var(--color-1) 0%, var(--color-1) 25%, var(--color-2) 25%, var(--color-2) 50%, var(--color-3) 50%, var(--color-3) 75%, var(--color-4) 75%, var(--color-4) 100%);
+}/* 한국 주식 시장 대시보드 스타일 */
+
+/* 기본 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #f7fafc;
+    color: #2d3748;
+    line-height: 1.6;
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* 컨테이너 */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* 메인 헤더 */
+.main-header {
+    background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+    color: white;
+    padding: 24px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.header-title h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    font-weight: 400;
+}
+
+.header-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.update-time {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.time-label {
+    font-size: 0.875rem;
+    opacity: 0.8;
+}
+
+.time-value {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.875rem;
+    gap: 8px;
+    border: none;
+}
+
+.btn--secondary {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.btn--secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+/* 요약 카드 섹션 */
+.summary-section {
+    padding: 32px 0;
+    background: white;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.summary-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.summary-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--accent-color);
+    transition: height 0.3s ease;
+}
+
+.summary-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.summary-card:hover::before {
+    height: 8px;
+}
+
+.card-kospi {
+    --accent-color: #3182ce;
+}
+
+.card-kosdaq {
+    --accent-color: #38a169;
+}
+
+.card-theme {
+    --accent-color: #ed8936;
+}
+
+.card-movers {
+    --accent-color: #e53e3e;
+}
+
+.card-icon {
+    font-size: 2.5rem;
+    opacity: 0.8;
+    min-width: 60px;
+    text-align: center;
+}
+
+.card-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    line-height: 1;
+}
+
+.card-label {
+    font-size: 1.1rem;
+    color: #4a5568;
+    font-weight: 500;
+    margin-top: 4px;
+}
+
+/* 대시보드 */
+.dashboard {
+    padding: 40px 0;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 32px;
+}
+
+.dashboard-section {
+    animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section-header {
+    margin-bottom: 16px;
+}
+
+.section-header h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1a365d;
+    margin-bottom: 4px;
+}
+
+.section-subtitle {
+    font-size: 0.875rem;
+    color: #718096;
+}
+
+/* 카드 */
+.card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.card__body {
+    padding: 0;
+}
+
+/* 테이블 */
+.table-container {
+    overflow-x: auto;
+}
+
+.kosdaq-table-container {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.stocks-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.stocks-table th {
+    background: #f8fafc;
+    padding: 16px 12px;
+    text-align: left;
+    font-weight: 600;
+    color: #4a5568;
+    border-bottom: 2px solid #e2e8f0;
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.stocks-table th.sortable {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.stocks-table th.sortable:hover {
+    background: #edf2f7;
+}
+
+.stocks-table th.sortable::after {
+    content: ' ↕';
+    opacity: 0.5;
+    font-size: 0.8rem;
+}
+
+.stocks-table td {
+    padding: 14px 12px;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: middle;
+}
+
+.stocks-table tbody tr {
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+}
+
+.stocks-table tbody tr:hover {
+    background-color: #f7fafc;
+}
+
+.stock-name {
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.stock-code {
+    font-size: 0.85rem;
+    color: #718096;
+    font-family: 'Courier New', monospace;
+}
+
+.stock-price {
+    font-weight: 600;
+    font-family: 'Courier New', monospace;
+}
+
+.stock-change {
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+/* 한국식 색상 적용: 상승=빨간색, 하락=파란색 */
+.change-positive {
+    color: #e53e3e;
+    background: rgba(229, 62, 62, 0.1);
+}
+
+.change-negative {
+    color: #3182ce;
+    background: rgba(49, 130, 206, 0.1);
+}
+
+.stock-reason {
+    font-size: 0.85rem;
+    color: #4a5568;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 테마 카드 */
+.themes-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.theme-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.theme-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* 한국식 색상 적용: 상승=빨간색, 하락=파란색 */
+.theme-card.theme-up {
+    border-left: 4px solid #e53e3e;
+}
+
+.theme-card.theme-down {
+    border-left: 4px solid #3182ce;
+}
+
+.theme-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #2d3748;
+}
+
+.theme-direction {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+/* 한국식 색상 적용: 상승=빨간색, 하락=파란색 */
+.theme-direction.up {
+    background: rgba(229, 62, 62, 0.1);
+    color: #e53e3e;
+}
+
+.theme-direction.down {
+    background: rgba(49, 130, 206, 0.1);
+    color: #3182ce;
+}
+
+.theme-reason {
+    font-size: 0.9rem;
+    color: #4a5568;
+    line-height: 1.5;
+}
+
+/* 모달 */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal {
+    background: white;
+    border-radius: 16px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal {
+    transform: scale(1);
+}
+
+.modal-header {
+    padding: 24px;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #1a365d;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #718096;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+    background: #f7fafc;
+    color: #4a5568;
+}
+
+.modal-body {
+    padding: 24px;
+}
+
+.modal-stock-info {
+    margin-bottom: 24px;
+    padding: 20px;
+    background: #f8fafc;
+    border-radius: 8px;
+}
+
+.modal-stock-info .stock-name {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.modal-stock-info .stock-code {
+    font-size: 1rem;
+    margin-bottom: 12px;
+}
+
+.modal-stock-info .stock-price {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+}
+
+.modal-stock-info .stock-change {
+    font-size: 1.1rem;
+    padding: 6px 12px;
+}
+
+.modal-reason h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #2d3748;
+}
+
+.modal-reason p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #4a5568;
+}
+
+/* 툴팁 */
+.tooltip {
+    position: absolute;
+    background: #2d3748;
+    color: white;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    max-width: 300px;
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    pointer-events: none;
+}
+
+.tooltip.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.tooltip::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: #2d3748;
+}
+
+/* 푸터 */
+.footer {
+    background: #2d3748;
+    color: white;
+    padding: 24px 0;
+    margin-top: 60px;
+}
+
+.footer-content {
+    text-align: center;
+}
+
+.disclaimer {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .header-title h1 {
+        font-size: 2rem;
+    }
+    
+    .summary-cards {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 16px;
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    
+    .stocks-table {
+        font-size: 0.8rem;
+    }
+    
+    .stocks-table th,
+    .stocks-table td {
+        padding: 10px 8px;
+    }
+    
+    .themes-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal {
+        width: 95%;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 16px;
+    }
+    
+    .header-title h1 {
+        font-size: 1.8rem;
+    }
+    
+    .summary-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .summary-card {
+        padding: 20px;
+    }
+    
+    .card-number {
+        font-size: 2rem;
+    }
+    
+    .stocks-table th,
+    .stocks-table td {
+        padding: 8px 6px;
+    }
+    
+    .stock-reason {
+        max-width: 150px;
+    }
+}
+
+  </style>
+
+  
+</head>
+<body>
+  <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -42,7 +722,7 @@
                 <div class="summary-card card-kosdaq">
                     <div class="card-icon">📈</div>
                     <div class="card-content">
-                        <div class="card-number">24</div>
+                        <div class="card-number">23</div>
                         <div class="card-label">코스닥 특징종목</div>
                     </div>
                 </div>
@@ -205,5 +885,382 @@
     </footer>
 
     <script src="app.js"></script>
+</body>
+</html>
+
+
+  <script>
+    // 한국 주식 시장 대시보드 JavaScript
+
+// 데이터
+const stockData = {
+    kospi_stocks: [
+        {"name": "콜마홀딩스", "code": "024720", "price": "15,950원", "change": "29.99%", "reason": "경영권 분쟁 소식에 상한가"},
+        {"name": "NAVER", "code": "035420", "price": "243,500원", "change": "17.92%", "reason": "JP모건 목표가 상향 및 AI수석 배출 모멘텀 지속 등에 급등"},
+        {"name": "산일전기", "code": "062040", "price": "79,100원", "change": "8.06%", "reason": "2분기 실적 컨센서스 상회 전망 및 3분기 증설 효과 본격화 기대감 등에 강세"},
+        {"name": "NH투자증권", "code": "005940", "price": "19,450원", "change": "4.40%", "reason": "美 증권사 에버코어와 IPO 업무 협약 체결에 상승"},
+        {"name": "동아쏘시오홀딩스", "code": "000640", "price": "123,000원", "change": "4.33%", "reason": "에스티젠바이오 성장 잠재력 주목 분석 등에 상승"},
+        {"name": "삼성전자", "code": "005930", "price": "59,800원", "change": "2.93%", "reason": "3분기부터 기술·판매 정상화 전망 속 저평가 분석 등에 소폭 상승"},
+        {"name": "현대백화점", "code": "069960", "price": "72,000원", "change": "2.56%", "reason": "실적개선 전망 등에 소폭 상승"},
+        {"name": "한국전력", "code": "015760", "price": "28,900원", "change": "2.30%", "reason": "라트비아전력사와 차세대 배전망 협력 소식 속 소폭 상승"}
+    ],
+    kosdaq_stocks: [
+        {"name": "엔에프씨", "code": "265740", "price": "9,470원", "change": "29.90%", "reason": "클렌징밤 대표기업 분석 등에 상한가"},
+        {"name": "에스텍", "code": "069510", "price": "18,300원", "change": "16.19%", "reason": "전기차 기반 자율주행차 시장 확대 수혜주 분석 등에 급등"},
+        {"name": "비트맥스", "code": "377030", "price": "6,200원", "change": "15.89%", "reason": "900억원 규모 비트코인 추가 매수 계획 속 마이크로스트래티지사업 전략 벤치마킹 소식 등에 급등"},
+        {"name": "세아메카닉스", "code": "396300", "price": "2,880원", "change": "15.20%", "reason": "실적 급성장 전망 등에 급등"},
+        {"name": "토마토시스템", "code": "393210", "price": "7,590원", "change": "11.29%", "reason": "2025년 기능성게임 제작지원사업 최종 선정 소식에 급등"},
+        {"name": "비올", "code": "335890", "price": "12,380원", "change": "10.54%", "reason": "VIG파트너스, 동사 자진상폐를 위한 공개매수 추진 소식에 급등"},
+        {"name": "이노룰스", "code": "296640", "price": "7,760원", "change": "8.23%", "reason": "NH손해보험 '보험금 자동심사 시스템' 구축 소식에 강세"},
+        {"name": "그리드위즈", "code": "453450", "price": "21,600원", "change": "7.20%", "reason": "DER Gateway 공식 출시 및 북미 스마트그리드 표준 인증 획득 소식에 강세"},
+        {"name": "에스씨엠생명과학", "code": "298060", "price": "929원", "change": "5.81%", "reason": "풍전약품 지분 100% 양수 결정에 상승"},
+        {"name": "모니터랩", "code": "434480", "price": "4,730원", "change": "5.11%", "reason": "공공 수주와 글로벌 확장 본격화 기대감 등에 상승"},
+        {"name": "펨트론", "code": "168360", "price": "13,420원", "change": "5.09%", "reason": "올해 영업이익 흑자전환 전망 및 HBM 검사장비 퀄 테스트 통과 기대감 등에 상승"},
+        {"name": "현대무벡스", "code": "319400", "price": "4,380원", "change": "5.04%", "reason": "물류자동화 부문 신규수주 급증 등에 상승"},
+        {"name": "이노와이어리스", "code": "073490", "price": "21,700원", "change": "4.83%", "reason": "시험장비/스몰셀 매출처 확대에 따른 이익 개선 전망 등에 상승"},
+        {"name": "파크시스템스", "code": "140860", "price": "281,500원", "change": "4.45%", "reason": "2분기 호실적 전망 및 신규 장비 성장 기대감 등에 상승"},
+        {"name": "엠젠솔루션", "code": "032790", "price": "1,204원", "change": "4.33%", "reason": "새 정부의 중대재해처벌법 강화 추진에 따른 수혜주 분석에 상승"},
+        {"name": "플래티어", "code": "367000", "price": "4,600원", "change": "3.60%", "reason": "제주항공에 AI 마케팅 솔루션 '그루비' 공급 소식 속 상승"},
+        {"name": "KCC건설", "code": "021320", "price": "5,300원", "change": "3.52%", "reason": "약 1,988억원 규모 충북선 노반 건설공사 실시설계적격자 선정 속 상승"},
+        {"name": "유비온", "code": "084440", "price": "1,240원", "change": "3.25%", "reason": "글로벌 에듀테크 사업 확장 분석 등에 상승"},
+        {"name": "로킷헬스케어", "code": "376900", "price": "14,210원", "change": "3.20%", "reason": "'연골재생 관련 핵심기술' 美 특허 등록 완료 소식에 상승"},
+        {"name": "KH바텍", "code": "060720", "price": "10,480원", "change": "2.75%", "reason": "전장 부품 성장에 따른 실적 개선 전망 등에 소폭 상승"},
+        {"name": "에스에프에이", "code": "056190", "price": "21,300원", "change": "2.40%", "reason": "2분기 호실적 전망 및 저평가 분석 등에 소폭 상승"},
+        {"name": "이엔셀", "code": "456070", "price": "13,100원", "change": "2.18%", "reason": "셀인셀즈와 임상시험용 의약품 CDMO 계약 체결에 소폭 상승"},
+        {"name": "모아라이프플러스", "code": "142760", "price": "2,145원", "change": "-2.05%", "reason": "자기 전환사채 매도 결정 속 소폭 하락"}
+    ],
+    main_themes: [
+        {"name": "AI 관련", "direction": "상승", "reason": "이재명 대통령 AI 정책 기대감 지속"},
+        {"name": "게임", "direction": "상승", "reason": "한한령 해제 기대감 및 하반기 신작 모멘텀"},
+        {"name": "지역화폐", "direction": "상승", "reason": "정부 추경 반영 소식"},
+        {"name": "카지노", "direction": "상승", "reason": "중국인 단체관광객 기대감"},
+        {"name": "해운/물류", "direction": "상승", "reason": "이스라엘-이란 긴장 고조 속 호르무즈 해협 봉쇄 가능성"},
+        {"name": "에너지", "direction": "상승", "reason": "이스라엘·이란 분쟁 美 개입 가능성 속 국제유가 급등"},
+        {"name": "스테이블코인", "direction": "상승", "reason": "美 상원, 스테이블코인 법안 통과"},
+        {"name": "화장품/패션", "direction": "상승", "reason": "소비재 산업 호황 전망"},
+        {"name": "건설", "direction": "하락", "reason": "상장 건설사 부채비율 200% 돌파, 재무건전성 위험"},
+        {"name": "신재생에너지", "direction": "하락", "reason": "美 상원, 2028년까지 재생에너지 세액공제 전면폐지 초안 공개"}
+    ],
+    top_movers: [
+        {"name": "네패스아크", "code": "330860", "price": "14,950원", "change": "+30.00%", "reason": "정부 16조 규모 AI 투자 발표 소식 속 엑시노스 테스트 물량 수주 이력 보유 부각에 상한가"},
+        {"name": "콜마홀딩스", "code": "024720", "price": "15,950원", "change": "+29.99%", "reason": "일부 화장품 테마 상승 속 경영권 분쟁 소식에 상한가"},
+        {"name": "네오펙트", "code": "290660", "price": "1,179원", "change": "+29.99%", "reason": "지능형로봇/인공지능(AI) 및 의료기기 테마 상승 속 상한가"},
+        {"name": "심플랫폼", "code": "444530", "price": "17,340원", "change": "+29.99%", "reason": "지능형로봇/인공지능(AI) 테마 상승 속 DB하이텍에 AI 플랫폼 기반 공정 확대 적용 모멘텀 지속에 상한가"},
+        {"name": "신풍제약", "code": "019170", "price": "16,650원", "change": "+29.98%", "reason": "코로나19 관련 유럽 특허 획득 모멘텀 지속에 상한가"},
+        {"name": "크라우드웍스", "code": "355390", "price": "12,500원", "change": "+29.94%", "reason": "이재명 대통령 AI 정책 기대감 지속 등에 지능형로봇/인공지능(AI) 테마 상승 속 상한가"},
+        {"name": "사이냅소프트", "code": "466410", "price": "16,840원", "change": "+29.94%", "reason": "이재명 대통령 AI 정책 기대감 지속 등에 AI 챗봇(챗GPT 등) 테마 상승 속 상한가"},
+        {"name": "엔에프씨", "code": "265740", "price": "9,470원", "change": "+29.90%", "reason": "일부화장품 테마 상승 속 클렌징밤 대표기업 분석 등에 상한가"},
+        {"name": "비큐AI", "code": "148780", "price": "2,365원", "change": "+29.87%", "reason": "지능형로봇/인공지능(AI) 테마 상승 및 이재명 행정부, 소버린 AI 개발 정책 속 RDP-Line 기대감 지속 등에 상한가"},
+        {"name": "아톤", "code": "158430", "price": "10,430원", "change": "+24.91%", "reason": "美 상원, 스테이블코인 법안 통과 소식에 STO/NFT/보안주/핀테크 테마 상승 속 급등"}
+    ]
+};
+
+// DOM 요소들
+let modal, modalOverlay, tooltip;
+
+// 페이지 로드 시 초기화
+document.addEventListener('DOMContentLoaded', function() {
+    // DOM 요소 선택
+    modal = document.getElementById('modalOverlay');
+    modalOverlay = document.getElementById('modalOverlay');
+    tooltip = document.getElementById('tooltip');
+    
+    // 데이터 렌더링
+    renderTopMovers();
+    renderThemes();
+    renderKospiStocks();
+    renderKosdaqStocks();
+    
+    // 이벤트 리스너 설정
+    setupEventListeners();
+});
+
+// 급등종목 TOP 10 렌더링
+function renderTopMovers() {
+    const tbody = document.getElementById('topMoversBody');
+    const html = stockData.top_movers.map(stock => `
+        <tr class="stock-row" data-stock='${JSON.stringify(stock)}'>
+            <td>
+                <div class="stock-name">${stock.name}</div>
+            </td>
+            <td>
+                <div class="stock-code">${stock.code}</div>
+            </td>
+            <td>
+                <div class="stock-price">${stock.price}</div>
+            </td>
+            <td>
+                <div class="stock-change ${getChangeClass(stock.change)}">${stock.change}</div>
+            </td>
+        </tr>
+    `).join('');
+    tbody.innerHTML = html;
+}
+
+// 테마 현황 렌더링
+function renderThemes() {
+    const container = document.getElementById('themesContainer');
+    const html = stockData.main_themes.map(theme => `
+        <div class="theme-card ${theme.direction === '상승' ? 'theme-up' : 'theme-down'}" 
+             data-tooltip="${theme.reason}">
+            <div class="theme-name">${theme.name}</div>
+            <div class="theme-direction ${theme.direction === '상승' ? 'up' : 'down'}">
+                ${theme.direction === '상승' ? '📈' : '📉'} ${theme.direction}
+            </div>
+            <div class="theme-reason">${theme.reason}</div>
+        </div>
+    `).join('');
+    container.innerHTML = html;
+}
+
+// 코스피 종목 렌더링
+function renderKospiStocks() {
+    const tbody = document.getElementById('kospiBody');
+    const html = stockData.kospi_stocks.map(stock => `
+        <tr class="stock-row" data-stock='${JSON.stringify(stock)}'>
+            <td>
+                <div class="stock-name">${stock.name}</div>
+            </td>
+            <td>
+                <div class="stock-code">${stock.code}</div>
+            </td>
+            <td>
+                <div class="stock-price">${stock.price}</div>
+            </td>
+            <td>
+                <div class="stock-change ${getChangeClass(stock.change)}">${stock.change}</div>
+            </td>
+            <td>
+                <div class="stock-reason">${stock.reason}</div>
+            </td>
+        </tr>
+    `).join('');
+    tbody.innerHTML = html;
+}
+
+// 코스닥 종목 렌더링
+function renderKosdaqStocks() {
+    const tbody = document.getElementById('kosdaqBody');
+    const html = stockData.kosdaq_stocks.map(stock => `
+        <tr class="stock-row" data-stock='${JSON.stringify(stock)}'>
+            <td>
+                <div class="stock-name">${stock.name}</div>
+            </td>
+            <td>
+                <div class="stock-code">${stock.code}</div>
+            </td>
+            <td>
+                <div class="stock-price">${stock.price}</div>
+            </td>
+            <td>
+                <div class="stock-change ${getChangeClass(stock.change)}">${stock.change}</div>
+            </td>
+            <td>
+                <div class="stock-reason">${stock.reason}</div>
+            </td>
+        </tr>
+    `).join('');
+    tbody.innerHTML = html;
+}
+
+// 등락률에 따른 CSS 클래스 반환 (한국식 색상)
+function getChangeClass(change) {
+    const cleanChange = change.replace(/[+%]/g, '');
+    return parseFloat(cleanChange) >= 0 ? 'change-positive' : 'change-negative';
+}
+
+// 이벤트 리스너 설정
+function setupEventListeners() {
+    // 새로고침 버튼
+    const refreshBtn = document.getElementById('refreshBtn');
+    refreshBtn.addEventListener('click', handleRefresh);
+    
+    // 모달 닫기
+    const modalClose = document.getElementById('modalClose');
+    modalClose.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', function(e) {
+        if (e.target === modalOverlay) {
+            closeModal();
+        }
+    });
+    
+    // ESC 키로 모달 닫기
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeModal();
+        }
+    });
+    
+    // 종목 행 클릭 이벤트
+    document.addEventListener('click', function(e) {
+        const stockRow = e.target.closest('.stock-row');
+        if (stockRow) {
+            const stockData = JSON.parse(stockRow.dataset.stock);
+            showStockModal(stockData);
+        }
+    });
+    
+    // 테이블 정렬
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('sortable')) {
+            const table = e.target.closest('table');
+            const sortKey = e.target.dataset.sort;
+            sortTable(table, sortKey);
+        }
+    });
+    
+    // 테마 카드 호버 툴팁
+    document.addEventListener('mouseenter', function(e) {
+        if (e.target.classList.contains('theme-card')) {
+            const tooltipText = e.target.dataset.tooltip;
+            showTooltip(e, tooltipText);
+        }
+    }, true);
+    
+    document.addEventListener('mouseleave', function(e) {
+        if (e.target.classList.contains('theme-card')) {
+            hideTooltip();
+        }
+    }, true);
+}
+
+// 새로고침 처리
+function handleRefresh() {
+    const btn = document.getElementById('refreshBtn');
+    const originalText = btn.innerHTML;
+    
+    // 로딩 애니메이션
+    btn.innerHTML = '<span style="animation: spin 1s linear infinite;">🔄</span> 새로고침 중...';
+    btn.disabled = true;
+    
+    // 2초 후 복원 (실제로는 API 호출)
+    setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        
+        // 페이지 새로고침 효과
+        document.body.style.opacity = '0.8';
+        setTimeout(() => {
+            document.body.style.opacity = '1';
+        }, 200);
+    }, 2000);
+}
+
+// 종목 상세 모달 표시
+function showStockModal(stock) {
+    document.getElementById('modalStockName').textContent = stock.name;
+    document.getElementById('modalStockCode').textContent = `(${stock.code})`;
+    document.getElementById('modalStockPrice').textContent = stock.price;
+    
+    const changeElement = document.getElementById('modalStockChange');
+    changeElement.textContent = stock.change;
+    changeElement.className = `stock-change ${getChangeClass(stock.change)}`;
+    
+    document.getElementById('modalReason').textContent = stock.reason;
+    
+    modalOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+// 모달 닫기
+function closeModal() {
+    modalOverlay.classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+// 툴팁 표시
+function showTooltip(event, text) {
+    const tooltipContent = document.getElementById('tooltipContent');
+    tooltipContent.textContent = text;
+    
+    tooltip.style.left = event.pageX + 'px';
+    tooltip.style.top = event.pageY - tooltip.offsetHeight - 10 + 'px';
+    tooltip.classList.add('active');
+}
+
+// 툴팁 숨기기
+function hideTooltip() {
+    tooltip.classList.remove('active');
+}
+
+// 테이블 정렬
+function sortTable(table, sortKey) {
+    const tbody = table.querySelector('tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    
+    // 현재 정렬 방향 확인
+    const header = table.querySelector(`th[data-sort="${sortKey}"]`);
+    const isAscending = !header.classList.contains('sort-desc');
+    
+    // 모든 헤더에서 정렬 클래스 제거
+    table.querySelectorAll('th').forEach(th => {
+        th.classList.remove('sort-asc', 'sort-desc');
+    });
+    
+    // 현재 헤더에 정렬 클래스 추가
+    header.classList.add(isAscending ? 'sort-asc' : 'sort-desc');
+    
+    // 정렬
+    rows.sort((a, b) => {
+        const aData = JSON.parse(a.dataset.stock);
+        const bData = JSON.parse(b.dataset.stock);
+        
+        let aValue, bValue;
+        
+        switch(sortKey) {
+            case 'name':
+                aValue = aData.name;
+                bValue = bData.name;
+                break;
+            case 'code':
+                aValue = aData.code;
+                bValue = bData.code;
+                break;
+            case 'price':
+                aValue = parseFloat(aData.price.replace(/[,원]/g, ''));
+                bValue = parseFloat(bData.price.replace(/[,원]/g, ''));
+                break;
+            case 'change':
+                aValue = parseFloat(aData.change.replace(/[+%]/g, ''));
+                bValue = parseFloat(bData.change.replace(/[+%]/g, ''));
+                break;
+            default:
+                return 0;
+        }
+        
+        if (typeof aValue === 'string') {
+            return isAscending ? 
+                aValue.localeCompare(bValue, 'ko') : 
+                bValue.localeCompare(aValue, 'ko');
+        } else {
+            return isAscending ? aValue - bValue : bValue - aValue;
+        }
+    });
+    
+    // 정렬된 행들을 다시 tbody에 추가
+    rows.forEach(row => tbody.appendChild(row));
+}
+
+// CSS 애니메이션을 위한 스타일 추가
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    .sort-asc::after {
+        content: ' ↑';
+        color: #3182ce;
+    }
+    
+    .sort-desc::after {
+        content: ' ↓'; 
+        color: #3182ce;
+    }
+`;
+document.head.appendChild(style);
+
+  </script>
 </body>
 </html>
