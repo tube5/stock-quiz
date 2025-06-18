@@ -1,1 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📈 주식 시장 대시보드</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 메인 헤더 -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-title">
+                    <h1>📈 주식 시장 대시보드</h1>
+                    <p class="header-subtitle">특징종목 및 테마 분석</p>
+                </div>
+                <div class="header-info">
+                    <div class="update-time">
+                        <span class="time-label">업데이트 시간</span>
+                        <span class="time-value">2025년 6월 18일 오후 7:02 기준</span>
+                    </div>
+                    <button class="btn btn--secondary refresh-btn" id="refreshBtn">
+                        <span>🔄</span> 새로고침
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
 
+    <!-- 요약 카드 섹션 -->
+    <section class="summary-section">
+        <div class="container">
+            <div class="summary-cards">
+                <div class="summary-card card-kospi">
+                    <div class="card-icon">📊</div>
+                    <div class="card-content">
+                        <div class="card-number">8</div>
+                        <div class="card-label">코스피 특징종목</div>
+                    </div>
+                </div>
+                <div class="summary-card card-kosdaq">
+                    <div class="card-icon">📈</div>
+                    <div class="card-content">
+                        <div class="card-number">24</div>
+                        <div class="card-label">코스닥 특징종목</div>
+                    </div>
+                </div>
+                <div class="summary-card card-theme">
+                    <div class="card-icon">🎯</div>
+                    <div class="card-content">
+                        <div class="card-number">10</div>
+                        <div class="card-label">주요 테마</div>
+                    </div>
+                </div>
+                <div class="summary-card card-movers">
+                    <div class="card-icon">🚀</div>
+                    <div class="card-content">
+                        <div class="card-number">10</div>
+                        <div class="card-label">급등종목</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 메인 대시보드 -->
+    <main class="dashboard">
+        <div class="container">
+            <div class="dashboard-grid">
+                <!-- 급등종목 TOP 10 -->
+                <section class="dashboard-section">
+                    <div class="section-header">
+                        <h2>🚀 급등종목 TOP 10</h2>
+                        <span class="section-subtitle">상한가 포함 등락률 순</span>
+                    </div>
+                    <div class="card">
+                        <div class="card__body">
+                            <div class="table-container">
+                                <table class="stocks-table" id="topMoversTable">
+                                    <thead>
+                                        <tr>
+                                            <th class="sortable" data-sort="name">종목명</th>
+                                            <th class="sortable" data-sort="code">종목코드</th>
+                                            <th class="sortable" data-sort="price">현재가</th>
+                                            <th class="sortable" data-sort="change">등락률</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="topMoversBody">
+                                        <!-- 동적으로 생성 -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 시장 테마 현황 -->
+                <section class="dashboard-section">
+                    <div class="section-header">
+                        <h2>🎯 시장 테마 현황</h2>
+                        <span class="section-subtitle">상승/하락 테마 분석</span>
+                    </div>
+                    <div class="themes-container" id="themesContainer">
+                        <!-- 동적으로 생성 -->
+                    </div>
+                </section>
+
+                <!-- 코스피 특징종목 -->
+                <section class="dashboard-section">
+                    <div class="section-header">
+                        <h2>📊 코스피 특징종목</h2>
+                        <span class="section-subtitle">8개 종목</span>
+                    </div>
+                    <div class="card">
+                        <div class="card__body">
+                            <div class="table-container">
+                                <table class="stocks-table" id="kospiTable">
+                                    <thead>
+                                        <tr>
+                                            <th class="sortable" data-sort="name">종목명</th>
+                                            <th class="sortable" data-sort="code">코드</th>
+                                            <th class="sortable" data-sort="price">현재가</th>
+                                            <th class="sortable" data-sort="change">등락률</th>
+                                            <th>이슈 요약</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="kospiBody">
+                                        <!-- 동적으로 생성 -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 코스닥 특징종목 -->
+                <section class="dashboard-section">
+                    <div class="section-header">
+                        <h2>📈 코스닥 특징종목</h2>
+                        <span class="section-subtitle">23개 종목</span>
+                    </div>
+                    <div class="card">
+                        <div class="card__body">
+                            <div class="table-container kosdaq-table-container">
+                                <table class="stocks-table" id="kosdaqTable">
+                                    <thead>
+                                        <tr>
+                                            <th class="sortable" data-sort="name">종목명</th>
+                                            <th class="sortable" data-sort="code">코드</th>
+                                            <th class="sortable" data-sort="price">현재가</th>
+                                            <th class="sortable" data-sort="change">등락률</th>
+                                            <th>이슈 요약</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="kosdaqBody">
+                                        <!-- 동적으로 생성 -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- 모달 -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modalTitle">종목 상세 정보</h3>
+                <button class="modal-close" id="modalClose">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-stock-info">
+                    <div class="stock-name" id="modalStockName"></div>
+                    <div class="stock-code" id="modalStockCode"></div>
+                    <div class="stock-price" id="modalStockPrice"></div>
+                    <div class="stock-change" id="modalStockChange"></div>
+                </div>
+                <div class="modal-reason">
+                    <h4>상세 사유</h4>
+                    <p id="modalReason"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 툴팁 -->
+    <div class="tooltip" id="tooltip">
+        <div class="tooltip-content" id="tooltipContent"></div>
+    </div>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p class="disclaimer">
+                    <strong>데이터 출처:</strong> 한국거래소, 금융감독원 | 
+                    <strong>면책조항:</strong> 본 정보는 투자 참고용이며, 투자 결정에 대한 책임은 투자자 본인에게 있습니다.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
